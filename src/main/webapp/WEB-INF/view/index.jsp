@@ -1,10 +1,10 @@
 <%@page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>Main</title>
+    <title>Business Efficiency</title>
     <link rel="stylesheet" href="<c:url value="/style/index.css"/>">
 </head>
 
