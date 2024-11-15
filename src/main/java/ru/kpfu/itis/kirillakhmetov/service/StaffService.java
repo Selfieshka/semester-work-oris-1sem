@@ -18,4 +18,14 @@ public class StaffService {
     public List<Employee> getAllEmployees() throws CreateConnectionDBException, SQLException {
         return staffDao.getAllEmployees();
     }
+
+    public void addEmployee(String firstName, String lastName, String patronymic, String effectiveDate, String position, Integer salary) {
+        try {
+            staffDao.addEmployee(firstName, lastName, patronymic, effectiveDate, position, salary);
+        } catch (CreateConnectionDBException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
