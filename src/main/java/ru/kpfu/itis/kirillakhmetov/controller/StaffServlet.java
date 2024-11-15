@@ -28,6 +28,6 @@ public class StaffServlet extends HttpServlet {
         } catch (CreateConnectionDBException | SQLException e) {
             throw new RuntimeException(e);
         }
-        getServletContext().getRequestDispatcher("/WEB-INF/view/staff.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/view/staff/staff.jsp").forward(req, resp);
     }
 }

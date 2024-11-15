@@ -17,12 +17,14 @@ public class StaffDao {
     }
 
     public List<Employee> getAllEmployees() throws CreateConnectionDBException, SQLException {
+        // language=sql
+        String sqlQueryForGetAllEmployees = """
+                SELECT * FROM employee
+                INNER JOIN position USING(position_id)
+                """;
         ResultSet resultSet;
         Statement statement = connectionProvider.getConnection().createStatement();
-        resultSet = statement.executeQuery(
-                "SELECT * FROM employee " +
-                "INNER JOIN position USING(position_id) " +
-                "ORDER BY firstname, lastname, patronymic");
+        resultSet = statement.executeQuery(sqlQueryForGetAllEmployees);
 
         List<Employee> result = new ArrayList<>();
 
@@ -41,7 +43,7 @@ public class StaffDao {
         return result;
     }
 
-    public void addEmployee(String firstname, String lastname, String patronymic,String effectiveDate, String position, Integer salary) throws CreateConnectionDBException, SQLException {
+    public void addEmployee(String firstname, String lastname, String patronymic, String effectiveDate, String position, Integer salary) throws CreateConnectionDBException, SQLException {
         PreparedStatement statement = connectionProvider.getConnection()
                 .prepareStatement(
                         "INSERT INTO employee(firstname, lastname, patronymic, effectiveDate, position_id, salary) " +

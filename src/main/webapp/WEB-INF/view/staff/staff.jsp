@@ -4,12 +4,7 @@
 <head>
     <title>Business Efficiency</title>
 </head>
-<%--<body>--%>
-<%--<a>Имя | Фамилия | Отчество | Дата вступления в коллектив | Должность | Зарплата</a><br><br>--%>
-<%--<c:forEach items="${staff}" var="employee">--%>
-<%--    <a>${employee.getFirstName()} ${employee.getLastName()} ${employee.getPatronymic()} ${employee.getEffectiveDate()} ${employee.getPosition()} ${employee.getSalary()} </a><br>--%>
-<%--</c:forEach>--%>
-
+<body>
 <table border="1" cellpadding="5">
     <caption><h2>Список сотрудников</h2></caption>
     <tr>
@@ -30,7 +25,7 @@
             <td><c:out value="${employee.getSalary()}"/></td>
         </tr>
     </c:forEach>
-</table>
+</table border="1" cellpadding="5">
 <a href="<c:url value="/staff/add"/>" style="text-decoration:none;">
     <button>Добавить сотрудника</button>
 </a>

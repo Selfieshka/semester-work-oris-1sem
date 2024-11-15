@@ -21,7 +21,7 @@ public class EmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/WEB-INF/view/addEmployee.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/view/staff/addEmployee.jsp").forward(req, resp);
     }
 
     @Override
