@@ -8,11 +8,20 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 public class Employee {
-    private Integer employee_id;
+    private Long employee_id;
     private String firstName;
     private String lastName;
     private String patronymic;
     private LocalDate effectiveDate;
     private String position;
     private Integer salary;
+
+    public Employee(String firstName, String lastName, String patronymic, LocalDate effectiveDate, String position, Integer salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.patronymic = patronymic;
+        this.effectiveDate = effectiveDate;
+        this.position = position;
+        this.salary = salary;
+    }
 }

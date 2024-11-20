@@ -29,28 +29,36 @@ public class StaffDao {
         this.mapper = new EmployeeMapper();
     }
 
-    public List<Employee> getAll() throws CreateConnectionDBException, SQLException {
-        Statement statement = ConnectionProvider.getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
+    public List<Employee> getAll() {
+        try {
+            Statement statement = ConnectionProvider.getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
+            List<Employee> result = new ArrayList<>();
 
-        List<Employee> result = new ArrayList<>();
+            while (resultSet.next()) {
+                result.add(mapper.mapRow(resultSet));
+            }
 
-        while (resultSet.next()) {
-            result.add(mapper.mapRow(resultSet));
+            return result;
+        } catch (SQLException | CreateConnectionDBException e) {
+            throw new RuntimeException("Can't get all employee");
         }
-
-        return result;
     }
 
-    public void save(Employee employee) throws CreateConnectionDBException, SQLException {
-        PreparedStatement statement = ConnectionProvider.getConnection()
-                .prepareStatement(SQL_SAVE);
-        statement.setString(1, employee.getFirstName());
-        statement.setString(2, employee.getLastName());
-        statement.setString(3, employee.getPatronymic());
-        statement.setDate(4, Date.valueOf(employee.getEffectiveDate()));
-        statement.setString(5, employee.getPosition());
-        statement.setInt(6, employee.getSalary());
-        statement.execute();
+    public void save(Employee employee) {
+        PreparedStatement statement = null;
+        try {
+            statement = ConnectionProvider.getConnection()
+                    .prepareStatement(SQL_SAVE);
+            statement.setString(1, employee.getFirstName());
+            statement.setString(2, employee.getLastName());
+            statement.setString(3, employee.getPatronymic());
+            statement.setDate(4, Date.valueOf(employee.getEffectiveDate()));
+            statement.setString(5, employee.getPosition());
+            statement.setInt(6, employee.getSalary());
+            statement.execute();
+        } catch (SQLException | CreateConnectionDBException e) {
+            throw new RuntimeException("Can't save employee");
+        }
     }
 }
