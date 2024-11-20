@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.service.StaffService;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 @WebServlet("/staff/add")
 public class EmployeeServlet extends HttpServlet {
@@ -16,7 +17,7 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        staffService = (StaffService) getServletContext().getAttribute("staffDao");
+        staffService = (StaffService) getServletContext().getAttribute("staffService");
     }
 
     @Override
@@ -30,10 +31,10 @@ public class EmployeeServlet extends HttpServlet {
                 req.getParameter("firstName"),
                 req.getParameter("lastName"),
                 req.getParameter("patronymic"),
-                req.getParameter("effectiveDate"),
+                LocalDate.parse(req.getParameter("effectiveDate")),
                 req.getParameter("position"),
                 Integer.valueOf(req.getParameter("salary"))
         );
-        resp.sendRedirect("/staff");
+        resp.sendRedirect(req.getContextPath() + "/staff");
     }
 }

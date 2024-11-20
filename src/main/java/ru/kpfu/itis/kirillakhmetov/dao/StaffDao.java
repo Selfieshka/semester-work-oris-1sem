@@ -3,6 +3,8 @@ package ru.kpfu.itis.kirillakhmetov.dao;
 
 import ru.kpfu.itis.kirillakhmetov.entity.Employee;
 import ru.kpfu.itis.kirillakhmetov.exception.CreateConnectionDBException;
+import ru.kpfu.itis.kirillakhmetov.mapper.EmployeeMapper;
+import ru.kpfu.itis.kirillakhmetov.mapper.RowMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
 import java.sql.*;
@@ -10,51 +12,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StaffDao {
-    private final ConnectionProvider connectionProvider;
+    private final RowMapper<Employee> mapper;
+    //language=sql
+    private final static String SQL_GET_ALL = """
+            SELECT * FROM employee
+                INNER JOIN position USING(position_id)
+            """;
 
-    public StaffDao(ConnectionProvider connectionProvider) {
-        this.connectionProvider = connectionProvider;
+    //language=sql
+    private final static String SQL_SAVE = """
+            INSERT INTO employee(first_name, last_name, patronymic, effective_date, position_id, salary)
+            VALUES (?, ?, ?, ?, (SELECT position_id FROM position WHERE position_name = ?), ?)
+            """;
+
+    public StaffDao() {
+        this.mapper = new EmployeeMapper();
     }
 
-    public List<Employee> getAllEmployees() throws CreateConnectionDBException, SQLException {
-        // language=sql
-        String sqlQueryForGetAllEmployees = """
-                SELECT * FROM employee
-                INNER JOIN position USING(position_id)
-                """;
-        ResultSet resultSet;
-        Statement statement = connectionProvider.getConnection().createStatement();
-        resultSet = statement.executeQuery(sqlQueryForGetAllEmployees);
+    public List<Employee> getAll() throws CreateConnectionDBException, SQLException {
+        Statement statement = ConnectionProvider.getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
 
         List<Employee> result = new ArrayList<>();
 
         while (resultSet.next()) {
-            result.add(new Employee(
-                    resultSet.getInt("employee_id"),
-                    resultSet.getString("firstname"),
-                    resultSet.getString("lastname"),
-                    resultSet.getString("patronymic"),
-                    resultSet.getString("effectiveDate"),
-                    resultSet.getString("position_name"),
-                    resultSet.getInt("salary")
-            ));
+            result.add(mapper.mapRow(resultSet));
         }
 
         return result;
     }
 
-    public void addEmployee(String firstname, String lastname, String patronymic, String effectiveDate, String position, Integer salary) throws CreateConnectionDBException, SQLException {
-        PreparedStatement statement = connectionProvider.getConnection()
-                .prepareStatement(
-                        "INSERT INTO employee(firstname, lastname, patronymic, effectiveDate, position_id, salary) " +
-                                "VALUES (?, ?, ?, ?, (SELECT position_id FROM position WHERE position_name = ?), ?)"
-                );
-        statement.setString(1, firstname);
-        statement.setString(2, lastname);
-        statement.setString(3, patronymic);
-        statement.setDate(4, Date.valueOf(effectiveDate));
-        statement.setString(5, position);
-        statement.setInt(6, salary);
+    public void save(Employee employee) throws CreateConnectionDBException, SQLException {
+        PreparedStatement statement = ConnectionProvider.getConnection()
+                .prepareStatement(SQL_SAVE);
+        statement.setString(1, employee.getFirstName());
+        statement.setString(2, employee.getLastName());
+        statement.setString(3, employee.getPatronymic());
+        statement.setDate(4, Date.valueOf(employee.getEffectiveDate()));
+        statement.setString(5, employee.getPosition());
+        statement.setInt(6, employee.getSalary());
         statement.execute();
     }
 }

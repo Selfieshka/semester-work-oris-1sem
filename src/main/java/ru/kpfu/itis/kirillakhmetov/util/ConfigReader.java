@@ -8,21 +8,9 @@ import java.nio.file.NoSuchFileException;
 import java.util.Properties;
 
 public class ConfigReader {
-    private static ConfigReader instance;
-
-    private ConfigReader() {
-    }
-
-    public static ConfigReader getInstance() {
-        if (instance == null) {
-            return new ConfigReader();
-        }
-        return instance;
-    }
-
-    public Properties getConfigProperty(String filename) throws GetConfigInfoException {
+    public static Properties getConfigProperty(String filename) throws GetConfigInfoException {
         Properties properties = new Properties();
-        try (InputStream input = getClass().getClassLoader().getResourceAsStream(filename)) {
+        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(filename)) {
             if (input == null) {
                 throw new NoSuchFileException("No such file file with name " + filename);
             }

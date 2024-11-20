@@ -5,23 +5,24 @@ import ru.kpfu.itis.kirillakhmetov.entity.Employee;
 import ru.kpfu.itis.kirillakhmetov.exception.CreateConnectionDBException;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class StaffService {
 
     private final StaffDao staffDao;
 
-    public StaffService(StaffDao staffDao) {
-        this.staffDao = staffDao;
+    public StaffService() {
+        this.staffDao = new StaffDao();
     }
 
     public List<Employee> getAllEmployees() throws CreateConnectionDBException, SQLException {
-        return staffDao.getAllEmployees();
+        return staffDao.getAll();
     }
 
-    public void addEmployee(String firstName, String lastName, String patronymic, String effectiveDate, String position, Integer salary) {
+    public void addEmployee(String firstName, String lastName, String patronymic, LocalDate effectiveDate, String position, Integer salary) {
         try {
-            staffDao.addEmployee(firstName, lastName, patronymic, effectiveDate, position, salary);
+            staffDao.save(new Employee(null, firstName, lastName, patronymic, effectiveDate, position, salary));
         } catch (CreateConnectionDBException e) {
             throw new RuntimeException(e);
         } catch (SQLException e) {
