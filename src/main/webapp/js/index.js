@@ -1,38 +1,38 @@
-const data = [
-    {
-        x: '2010',
-        y: 10,
-    },
-    {
-        x: '2011',
-        y: 15,
-    },
-    {
-        x: '2012',
-        y: 13,
-    },
-    {
-        x: '2013',
-        y: 17,
-    },
-    {
-        x: '2015',
-        y: 25,
-    },
-]
+const requestURL = 'http://localhost:8080/business-efficiency/getAnalyticsData';
+
+async function fetchData() {
+    try {
+        const response = await fetch(requestURL);
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+
+        const jsonString = await response.text(); // Получаем текст ответа
+        const jsonData = JSON.parse(jsonString); // Парсим JSON строку в объект
+
+        // Преобразуем в необходимый формат
+        const data = jsonData.map(item => ({
+            x: item.x, // предполагаем, что в вашем JSON есть поле `x`
+            y: item.y, // предполагаем, что в вашем JSON есть поле `y`
+        }));
+
+        return data; // Возвращаем полученный массив
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error);
+        return []; // Возвращаем пустой массив в случае ошибки
+    }
+}
 
 class Chart {
     createSvgElement(tagName) {
         return document.createElementNS('http://www.w3.org/2000/svg', tagName)
     }
-
     setAttributes($svgElement, attributesObject) {
         Object.keys(attributesObject).forEach((key) => {
             $svgElement.setAttribute(key, attributesObject[key])
         })
     }
 }
-
 class LineChart extends Chart {
     horizontalPadding = 30
     legendYPadding = 30
@@ -43,14 +43,11 @@ class LineChart extends Chart {
         super()
         this.data = data
         this.$container = $container
-
         this.maxWidth = this.$container.offsetWidth
         this.maxHeight = this.$container.offsetHeight
-
         this.maxChartWidth = this.maxWidth - this.horizontalPadding * 3
         this.maxChartHeight =
             this.maxHeight - this.legendYPadding - this.topYPadding
-
         this.maxY = Math.max(...data.map((el) => el.y))
         this.minY = Math.min(...data.map((el) => el.y))
         this.zoom = this.maxChartHeight / (this.maxY - this.minY)
@@ -61,7 +58,6 @@ class LineChart extends Chart {
             this.zoom = 1
         }
     }
-
     createChartLine() {
         const $chartLine = this.createSvgElement('path')
         this.setAttributes($chartLine, {
@@ -73,7 +69,6 @@ class LineChart extends Chart {
         })
         return $chartLine
     }
-
     createAxisXSeparator() {
         const $axisXLine = this.createSvgElement('line')
         this.setAttributes($axisXLine, {
@@ -86,7 +81,6 @@ class LineChart extends Chart {
         })
         return $axisXLine
     }
-
     createTicks() {
         // Высота для каждой отметки
         const heightPerTick = 90
@@ -97,7 +91,6 @@ class LineChart extends Chart {
         // Отрисовать отметки
         const $ticks = []
         let tickValue = this.maxY
-
         for (let i = 0; i < ticksCount; i++) {
             const currentY = heightPerTick * i + this.topYPadding - this.circleRadius
             const $tick = this.createSvgElement('line')
@@ -109,20 +102,17 @@ class LineChart extends Chart {
                 'stroke-width': 0.5,
                 stroke: '#ccc',
             })
-
             const $text = this.createSvgElement('text')
             this.setAttributes($text, {
                 x: this.maxWidth - this.horizontalPadding,
                 y: currentY,
             })
             $text.append(tickValue.toFixed(1))
-
             $ticks.push($tick, $text)
             tickValue -= tickAdd
         }
         return $ticks
     }
-
     createCircle(el, x, y) {
         const $circle = this.createSvgElement('circle')
         this.setAttributes($circle, {
@@ -137,7 +127,6 @@ class LineChart extends Chart {
         $circle.dataset.circle = 'true'
         return $circle
     }
-
     onCircleOver($circle) {
         const $tooltip = document.createElement('div')
         $tooltip.textContent = $circle.dataset.text
@@ -151,7 +140,6 @@ class LineChart extends Chart {
         }
         this.$container.appendChild($tooltip)
     }
-
     create() {
         const $svg = this.createSvgElement('svg')
         this.setAttributes($svg, {
@@ -159,14 +147,11 @@ class LineChart extends Chart {
             height: '100%',
             viewBox: `0 0 ${this.maxWidth} ${this.maxHeight}`,
         })
-
         const $chartLine = this.createChartLine()
         const $ticks = this.createTicks()
         const $legendXLine = this.createAxisXSeparator()
-
         const lineLength = this.maxChartWidth / (this.data.length - 1)
         const yShift = this.minY * this.zoom
-
         $svg.append(...$ticks, $chartLine, $legendXLine)
         let d = 'M '
         let currentX = 0 + this.horizontalPadding
@@ -179,7 +164,6 @@ class LineChart extends Chart {
                 this.topYPadding -
                 this.circleRadius
             d += `${x} ${y} L `
-
             const $circle = this.createCircle(el, x, y)
             const $legendXText = this.createSvgElement('text')
             this.setAttributes($legendXText, {
@@ -187,28 +171,27 @@ class LineChart extends Chart {
                 y: this.maxHeight - 5,
             })
             $legendXText.append(el.x)
-
             $svg.append($circle, $legendXText)
-
             currentX += lineLength
         })
-
         d = d.slice(0, -3)
-
         $chartLine.setAttribute('d', d)
-
         this.$container.appendChild($svg)
-
         $svg.onmouseover = (e) => {
             if (e.target.dataset.circle) {
                 this.onCircleOver(e.target)
             }
         }
-
         return this
     }
 }
-
-const $chartContainer = document.getElementById('chart')
-
-new LineChart(data, $chartContainer).create()
+// const $chartContainer = document.getElementById('chart')
+// new LineChart(data, $chartContainer).create()
+fetchData().then(data => {
+    if (data.length > 0) {
+        const $chartContainer = document.getElementById('chart');
+        new LineChart(data, $chartContainer).create();
+    } else {
+        console.log('Получены пустые данные, график не будет создан.');
+    }
+});
