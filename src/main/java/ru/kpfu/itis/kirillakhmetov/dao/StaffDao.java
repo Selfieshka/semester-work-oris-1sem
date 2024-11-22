@@ -18,7 +18,6 @@ public class StaffDao {
             SELECT * FROM employee
                 INNER JOIN position USING(position_id)
             """;
-
     //language=sql
     private final static String SQL_SAVE = """
             INSERT INTO employee(first_name, last_name, patronymic, effective_date, position_id, salary)
@@ -46,9 +45,8 @@ public class StaffDao {
     }
 
     public void save(Employee employee) {
-        PreparedStatement statement = null;
         try {
-            statement = ConnectionProvider.getConnection()
+            PreparedStatement statement = ConnectionProvider.getConnection()
                     .prepareStatement(SQL_SAVE);
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());

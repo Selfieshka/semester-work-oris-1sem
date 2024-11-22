@@ -10,8 +10,8 @@ public class StaffService {
 
     private final StaffDao staffDao;
 
-    public StaffService() {
-        this.staffDao = new StaffDao();
+    public StaffService(StaffDao staffDao) {
+        this.staffDao = staffDao;
     }
 
     public List<Employee> getStaff() {
