@@ -6,24 +6,27 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.kpfu.itis.kirillakhmetov.entity.Dot;
+import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
+import ru.kpfu.itis.kirillakhmetov.service.AnalyticsService;
 
 import java.io.IOException;
 import java.util.*;
 
 @WebServlet("/getAnalyticsData")
 public class AnalyticsServlet extends HttpServlet {
+    private AnalyticsService analyticsService;
+
+    @Override
+    public void init() throws ServletException {
+        analyticsService = (AnalyticsService) getServletContext().getAttribute("analyticsService");
+    }
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        List<Dot> dots = new ArrayList<>();
-        dots.add(new Dot("2010", 1000));
-        dots.add(new Dot("2011", 20));
-        dots.add(new Dot("2012", 39));
-        dots.add(new Dot("2013", 1));
-        dots.add(new Dot("2015", 36));
-        String jsonObject = new ObjectMapper().writeValueAsString(dots);
+        String jsonResult = analyticsService.getBusinessProfitability();
+        List<Profitability> dots = new ArrayList<>();
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
-        resp.getWriter().write(jsonObject);
+        resp.getWriter().write(jsonResult);
     }
 }
