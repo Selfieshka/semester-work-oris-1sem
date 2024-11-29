@@ -1,6 +1,5 @@
 package ru.kpfu.itis.kirillakhmetov.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -10,7 +9,8 @@ import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 import ru.kpfu.itis.kirillakhmetov.service.AnalyticsService;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/getAnalyticsData")
 public class AnalyticsServlet extends HttpServlet {

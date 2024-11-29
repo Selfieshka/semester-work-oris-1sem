@@ -1,4 +1,4 @@
-const requestURL = 'http://localhost:8080/business-efficiency/getAnalyticsData';
+const requestURL = 'http://localhost:8080/BusinessEfficiency/getAnalyticsData';
 
 async function fetchData() {
     try {
@@ -27,18 +27,21 @@ class Chart {
     createSvgElement(tagName) {
         return document.createElementNS('http://www.w3.org/2000/svg', tagName)
     }
+
     setAttributes($svgElement, attributesObject) {
         Object.keys(attributesObject).forEach((key) => {
             $svgElement.setAttribute(key, attributesObject[key])
         })
     }
 }
+
 class LineChart extends Chart {
     horizontalPadding = 30
     legendYPadding = 30
     topYPadding = 30
     chartLineStrokeWidth = 5
     circleRadius = 6
+
     constructor(data, $container) {
         super()
         this.data = data
@@ -58,6 +61,7 @@ class LineChart extends Chart {
             this.zoom = 1
         }
     }
+
     createChartLine() {
         const $chartLine = this.createSvgElement('path')
         this.setAttributes($chartLine, {
@@ -69,6 +73,7 @@ class LineChart extends Chart {
         })
         return $chartLine
     }
+
     createAxisXSeparator() {
         const $axisXLine = this.createSvgElement('line')
         this.setAttributes($axisXLine, {
@@ -81,6 +86,7 @@ class LineChart extends Chart {
         })
         return $axisXLine
     }
+
     createTicks() {
         // Высота для каждой отметки
         const heightPerTick = 90
@@ -113,6 +119,7 @@ class LineChart extends Chart {
         }
         return $ticks
     }
+
     createCircle(el, x, y) {
         const $circle = this.createSvgElement('circle')
         this.setAttributes($circle, {
@@ -127,6 +134,7 @@ class LineChart extends Chart {
         $circle.dataset.circle = 'true'
         return $circle
     }
+
     onCircleOver($circle) {
         const $tooltip = document.createElement('div')
         $tooltip.textContent = $circle.dataset.text
@@ -140,6 +148,7 @@ class LineChart extends Chart {
         }
         this.$container.appendChild($tooltip)
     }
+
     create() {
         const $svg = this.createSvgElement('svg')
         this.setAttributes($svg, {
@@ -185,6 +194,7 @@ class LineChart extends Chart {
         return this
     }
 }
+
 // const $chartContainer = document.getElementById('chart')
 // new LineChart(data, $chartContainer).create()
 fetchData().then(data => {

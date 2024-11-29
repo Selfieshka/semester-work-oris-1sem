@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.kpfu.itis.kirillakhmetov.dao.AnalyticsDao;
 import ru.kpfu.itis.kirillakhmetov.dto.ProfitabilityRecordDto;
-import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 
 import java.util.List;
 
