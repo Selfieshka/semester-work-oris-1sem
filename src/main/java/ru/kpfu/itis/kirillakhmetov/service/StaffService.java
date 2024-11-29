@@ -15,7 +15,7 @@ public class StaffService {
     }
 
     public List<Employee> getStaff() {
-        return staffDao.getAll();
+        return staffDao.findAll();
     }
 
     public void addEmployee(EmployeeRecordDto employee) {

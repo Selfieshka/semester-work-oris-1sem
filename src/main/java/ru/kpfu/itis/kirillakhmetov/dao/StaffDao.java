@@ -3,15 +3,14 @@ package ru.kpfu.itis.kirillakhmetov.dao;
 
 import ru.kpfu.itis.kirillakhmetov.entity.Employee;
 import ru.kpfu.itis.kirillakhmetov.mapper.EmployeeMapper;
-import ru.kpfu.itis.kirillakhmetov.mapper.RowMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class StaffDao {
-    private final RowMapper<Employee> mapper;
+public class StaffDao extends BaseDao<Employee> {
     //language=sql
     private final static String SQL_GET_ALL = """
             SELECT * FROM employee
@@ -27,7 +26,8 @@ public class StaffDao {
         this.mapper = new EmployeeMapper();
     }
 
-    public List<Employee> getAll() {
+    @Override
+    public List<Employee> findAll() {
         try (Connection connection = ConnectionProvider.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SQL_GET_ALL)) {
@@ -43,6 +43,12 @@ public class StaffDao {
         }
     }
 
+    @Override
+    public Optional<Employee> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
     public void save(Employee employee) {
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
@@ -56,5 +62,10 @@ public class StaffDao {
         } catch (SQLException e) {
             throw new RuntimeException("Can't save employee");
         }
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
     }
 }

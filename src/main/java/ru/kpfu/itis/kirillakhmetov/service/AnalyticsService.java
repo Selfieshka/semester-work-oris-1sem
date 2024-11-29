@@ -16,7 +16,7 @@ public class AnalyticsService {
 
     public String getBusinessProfitability() {
         List<ProfitabilityRecordDto> profitabilities =
-                analyticsDao.getAll().stream()
+                analyticsDao.findAll().stream()
                         .map(profitability -> new ProfitabilityRecordDto(
                                 Integer.toString(profitability.getDate().getYear()),
                                 profitability.getValue().intValue()))

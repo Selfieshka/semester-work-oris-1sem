@@ -2,15 +2,14 @@ package ru.kpfu.itis.kirillakhmetov.dao;
 
 import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 import ru.kpfu.itis.kirillakhmetov.mapper.ProfitabilityMapper;
-import ru.kpfu.itis.kirillakhmetov.mapper.RowMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-public class AnalyticsDao {
-    private final RowMapper<Profitability> mapper;
+public class AnalyticsDao extends BaseDao<Profitability> {
     //language=sql
     private static final String SQL_SAVE = """
             INSERT INTO profitability (profitability_value, profitability_date)
@@ -23,18 +22,8 @@ public class AnalyticsDao {
         this.mapper = new ProfitabilityMapper();
     }
 
-    public void save(Profitability profitability) {
-        try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
-            statement.setDouble(1, profitability.getValue());
-            statement.setDate(2, Date.valueOf(profitability.getDate()));
-            statement.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException("Can't save profitability");
-        }
-    }
-
-    public List<Profitability> getAll() {
+    @Override
+    public List<Profitability> findAll() {
         try (Connection connection = ConnectionProvider.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(SQL_GET_ALL)) {
@@ -48,5 +37,27 @@ public class AnalyticsDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Optional<Profitability> findById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void save(Profitability profitability) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
+            statement.setDouble(1, profitability.getValue());
+            statement.setDate(2, Date.valueOf(profitability.getDate()));
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't save profitability");
+        }
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        return false;
     }
 }
