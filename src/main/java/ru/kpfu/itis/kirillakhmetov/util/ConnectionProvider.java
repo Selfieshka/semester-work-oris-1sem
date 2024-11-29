@@ -1,5 +1,7 @@
 package ru.kpfu.itis.kirillakhmetov.util;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import ru.kpfu.itis.kirillakhmetov.exception.CreateConnectionDBException;
 
 import java.lang.reflect.Proxy;
@@ -9,7 +11,7 @@ import java.sql.SQLException;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ConnectionProvider {
     private static final String DRIVER_KEY = "db.driver";
     private static final String URL_KEY = "db.url";
