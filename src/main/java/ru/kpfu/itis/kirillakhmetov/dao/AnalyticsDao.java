@@ -1,7 +1,6 @@
 package ru.kpfu.itis.kirillakhmetov.dao;
 
 import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
-import ru.kpfu.itis.kirillakhmetov.exception.CreateConnectionDBException;
 import ru.kpfu.itis.kirillakhmetov.mapper.ProfitabilityMapper;
 import ru.kpfu.itis.kirillakhmetov.mapper.RowMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
@@ -25,27 +24,28 @@ public class AnalyticsDao {
     }
 
     public void save(Profitability profitability) {
-        try {
-            PreparedStatement statement = ConnectionProvider.getConnection().prepareStatement(SQL_SAVE);
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
             statement.setDouble(1, profitability.getValue());
             statement.setDate(2, Date.valueOf(profitability.getDate()));
             statement.execute();
-        } catch (SQLException | CreateConnectionDBException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Can't save profitability");
         }
     }
 
     public List<Profitability> getAll() {
-        try {
-            Statement statement = ConnectionProvider.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
+        try (Connection connection = ConnectionProvider.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL)) {
 
             List<Profitability> result = new ArrayList<>();
-            while(resultSet.next()) {
+            while (resultSet.next()) {
                 result.add(mapper.mapRow(resultSet));
             }
+
             return result;
-        } catch (SQLException | CreateConnectionDBException e) {
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }

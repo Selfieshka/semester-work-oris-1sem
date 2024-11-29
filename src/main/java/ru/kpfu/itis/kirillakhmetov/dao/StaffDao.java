@@ -2,7 +2,6 @@ package ru.kpfu.itis.kirillakhmetov.dao;
 
 
 import ru.kpfu.itis.kirillakhmetov.entity.Employee;
-import ru.kpfu.itis.kirillakhmetov.exception.CreateConnectionDBException;
 import ru.kpfu.itis.kirillakhmetov.mapper.EmployeeMapper;
 import ru.kpfu.itis.kirillakhmetov.mapper.RowMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
@@ -29,25 +28,24 @@ public class StaffDao {
     }
 
     public List<Employee> getAll() {
-        try {
-            Statement statement = ConnectionProvider.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(SQL_GET_ALL);
-            List<Employee> result = new ArrayList<>();
+        try (Connection connection = ConnectionProvider.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL)) {
 
+            List<Employee> result = new ArrayList<>();
             while (resultSet.next()) {
                 result.add(mapper.mapRow(resultSet));
             }
 
             return result;
-        } catch (SQLException | CreateConnectionDBException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Can't get all employee");
         }
     }
 
     public void save(Employee employee) {
-        try {
-            PreparedStatement statement = ConnectionProvider.getConnection()
-                    .prepareStatement(SQL_SAVE);
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());
             statement.setString(3, employee.getPatronymic());
@@ -55,7 +53,7 @@ public class StaffDao {
             statement.setString(5, employee.getPosition());
             statement.setInt(6, employee.getSalary());
             statement.execute();
-        } catch (SQLException | CreateConnectionDBException e) {
+        } catch (SQLException e) {
             throw new RuntimeException("Can't save employee");
         }
     }

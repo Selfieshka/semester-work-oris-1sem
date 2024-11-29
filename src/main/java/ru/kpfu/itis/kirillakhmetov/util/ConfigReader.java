@@ -1,23 +1,30 @@
 package ru.kpfu.itis.kirillakhmetov.util;
 
-import ru.kpfu.itis.kirillakhmetov.exception.GetConfigInfoException;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.NoSuchFileException;
 import java.util.Properties;
 
-public class ConfigReader {
-    public static Properties getConfigProperty(String filename) throws GetConfigInfoException {
-        Properties properties = new Properties();
-        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(filename)) {
-            if (input == null) {
-                throw new NoSuchFileException("No such file file with name " + filename);
-            }
-            properties.load(input);
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ConfigReader {
+    private static final String NAME_APPLICATION_FILE = "application-dev.properties";
+    private static final Properties PROPERTIES = new Properties();
+
+    static {
+        loadConfig();
+    }
+
+    public static void loadConfig() {
+        try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(NAME_APPLICATION_FILE)) {
+            PROPERTIES.load(input);
         } catch (IOException e) {
-            throw new GetConfigInfoException();
+            throw new RuntimeException(e);
         }
-        return properties;
+    }
+
+    public static String getValue(String key) {
+        return PROPERTIES.getProperty(key);
     }
 }

@@ -187,7 +187,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # Project config
-src/main/resources/db-dev.properties
+src/main/resources/application-dev.properties
 
 #SQL files
 src/main/resources/sql/*
