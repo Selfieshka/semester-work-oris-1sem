@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.kpfu.itis.kirillakhmetov.dto.EmployeeRecordDto;
+import ru.kpfu.itis.kirillakhmetov.dto.EmployeeDto;
 import ru.kpfu.itis.kirillakhmetov.service.StaffService;
 
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class EmployeeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         staffService.addEmployee(
-                new EmployeeRecordDto(
+                new EmployeeDto(
                         req.getParameter("firstName"),
                         req.getParameter("lastName"),
                         req.getParameter("patronymic"),

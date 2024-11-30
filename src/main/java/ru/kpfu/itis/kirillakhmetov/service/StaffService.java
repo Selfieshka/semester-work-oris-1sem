@@ -1,7 +1,7 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
 import ru.kpfu.itis.kirillakhmetov.dao.StaffDao;
-import ru.kpfu.itis.kirillakhmetov.dto.EmployeeRecordDto;
+import ru.kpfu.itis.kirillakhmetov.dto.EmployeeDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Employee;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class StaffService {
         return staffDao.findAll();
     }
 
-    public void addEmployee(EmployeeRecordDto employee) {
+    public void addEmployee(EmployeeDto employee) {
         staffDao.save(new Employee(
                 employee.firstName(),
                 employee.lastName(),

@@ -3,7 +3,7 @@ package ru.kpfu.itis.kirillakhmetov.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.kpfu.itis.kirillakhmetov.dao.AnalyticsDao;
-import ru.kpfu.itis.kirillakhmetov.dto.ProfitabilityRecordDto;
+import ru.kpfu.itis.kirillakhmetov.dto.ProfitabilityDto;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ public class AnalyticsService {
     }
 
     public String getBusinessProfitability() {
-        List<ProfitabilityRecordDto> profitabilities =
+        List<ProfitabilityDto> profitabilities =
                 analyticsDao.findAll().stream()
-                        .map(profitability -> new ProfitabilityRecordDto(
+                        .map(profitability -> new ProfitabilityDto(
                                 Integer.toString(profitability.getDate().getYear()),
                                 profitability.getValue().intValue()))
                         .toList();
