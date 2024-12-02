@@ -5,15 +5,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 import ru.kpfu.itis.kirillakhmetov.service.FinanceService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-@WebServlet("/getAnalyticsData")
-public class AnalyticsServlet extends HttpServlet {
+@WebServlet("/finance")
+public class FinanceServlet extends HttpServlet {
     private FinanceService financeService;
 
     @Override
@@ -23,8 +20,7 @@ public class AnalyticsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String jsonResult = financeService.getBusinessProfitability();
-        resp.setContentType("application/json");
-        resp.getWriter().write(jsonResult);
+        getServletContext().setAttribute("info", financeService.getInfo());
+        getServletContext().getRequestDispatcher("/WEB-INF/view/finance-info.jsp").forward(req, resp);
     }
 }

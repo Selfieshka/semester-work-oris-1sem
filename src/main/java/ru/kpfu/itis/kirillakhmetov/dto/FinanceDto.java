@@ -1,4 +1,4 @@
 package ru.kpfu.itis.kirillakhmetov.dto;
 
-public record MonetaryAccountingDto() {
+public record FinanceDto() {
 }

@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="<c:url value="/style/index.css"/>">
     <script src="https://unpkg.com/@popperjs/core@2"></script>
-    <script defer src="<c:url value="/js/index.js"/>"></script>
+    <script defer src="<c:url value="/js/graph.js"/>"></script>
 </head>
 
 <body>
