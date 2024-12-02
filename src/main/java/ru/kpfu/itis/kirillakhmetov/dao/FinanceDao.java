@@ -1,6 +1,5 @@
 package ru.kpfu.itis.kirillakhmetov.dao;
 
-import ru.kpfu.itis.kirillakhmetov.entity.Employee;
 import ru.kpfu.itis.kirillakhmetov.entity.Finance;
 import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;

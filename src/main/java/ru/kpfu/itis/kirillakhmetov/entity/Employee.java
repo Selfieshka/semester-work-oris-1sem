@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 public class Employee {
-    private Long employee_id;
+    private Long id;
     private String firstName;
     private String lastName;
     private String patronymic;

@@ -5,12 +5,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import ru.kpfu.itis.kirillakhmetov.entity.Profitability;
 import ru.kpfu.itis.kirillakhmetov.service.FinanceService;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @WebServlet("/getAnalyticsData")
 public class AnalyticsServlet extends HttpServlet {
