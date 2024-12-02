@@ -26,14 +26,14 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        boolean attemptRegistration = securityService.signUp(new SignUpOwnerDto(
+        boolean signUpAttempt = securityService.signUp(new SignUpOwnerDto(
                 req.getParameter("username"),
                 req.getParameter("email"),
                 req.getParameter("password"),
                 req.getParameter("businessName"))
         );
 
-        if (attemptRegistration) {
+        if (signUpAttempt) {
             resp.sendRedirect(getServletContext().getContextPath() + "/login?registered=success");
         } else {
             resp.sendRedirect(getServletContext().getContextPath() + "/registration?registered=error");

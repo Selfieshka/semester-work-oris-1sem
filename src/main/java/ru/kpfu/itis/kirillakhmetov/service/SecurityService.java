@@ -1,6 +1,8 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
+import jakarta.servlet.http.HttpServletRequest;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
+import ru.kpfu.itis.kirillakhmetov.dto.SignInOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Owner;
 import ru.kpfu.itis.kirillakhmetov.util.PasswordHashingUtil;
@@ -27,5 +29,15 @@ public class SecurityService {
         } else {
             return false;
         }
+    }
+
+    public boolean signIn(HttpServletRequest req, SignInOwnerDto signInOwnerDto) {
+        Optional<Owner> ownerFromDb = ownerDao.findByEmail(signInOwnerDto.email());
+        if (ownerFromDb.isPresent()) {
+            Owner owner = ownerFromDb.get();
+            return owner.getEmail().equals(signInOwnerDto.email())
+                    && PasswordHashingUtil.compare(signInOwnerDto.password(), owner.getPassword());
+        }
+        return false;
     }
 }

@@ -13,12 +13,12 @@
 
 <body>
 <div class="wrapper">
-    <form method="POST" action="${pageContext.request.contextPath}/login">
+    <form method="POST">
         <h2>Добро пожаловать!</h2>
         <h1>Вход</h1>
         <div class="input-box">
             <i class='bx bxs-user'></i>
-            <input type="text" name="username" id="username" autocomplete="off" placeholder="Имя пользователя"
+            <input type="email" name="email" id="email" autocomplete="off" placeholder="Email пользователя"
                    required/>
         </div>
         <div class="input-box">
@@ -30,32 +30,33 @@
             <a href="#">Забыли пароль?</a>
         </div>
         <button type="submit" class="btn">Войти</button>
-        <div class="register-link">
-            <p>Ещё не зарегистрировались? <a class="registration"
-                                             href="${pageContext.request.contextPath}/registration">Регистрация</a></p>
+    </form>
+    <div class="register-link">
+        <p>Ещё не зарегистрировались?
+            <a class="registration" href="${pageContext.request.contextPath}/registration">Регистрация</a>
+        </p>
+    </div>
+    <c:if test="${param.login eq 'error'}">
+        <div class="message-box-error">
+                <span>
+                        Неверный email или пароль
+                </span>
         </div>
-
-        <%--        <div th:if="${param.error}" class="message-box-error">--%>
-        <%--            <span>--%>
-        <%--                Неверный логин или пароль--%>
-        <%--            </span>--%>
-        <%--        </div>--%>
-
-        <c:if test="${not empty param.registered}">
-            <div class="message-box-success">
+    </c:if>
+    <c:if test="${not empty param.registered}">
+        <div class="message-box-success">
                 <span>
                     Вы успешно зарегистрировались, повторите введённые данные
                 </span>
-            </div>
-        </c:if>
-
-        <%--        <div th:if="${param.logout}" class="message-box-logout">--%>
-        <%--            <span>--%>
-        <%--                Вы вышли из аккаунта--%>
-        <%--            </span>--%>
-        <%--        </div>--%>
-    </form>
+        </div>
+    </c:if>
+    <c:if test="${not empty param.logout}">
+        <div class="message-box-logout">
+                <span>
+                    Вы вышли из аккаунта
+                </span>
+        </div>
+    </c:if>
 </div>
 </body>
-
 </html>
