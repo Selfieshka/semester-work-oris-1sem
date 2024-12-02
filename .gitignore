@@ -189,6 +189,4 @@ $RECYCLE.BIN/
 # Project config
 src/main/resources/application-dev.properties
 
-#SQL files
-src/main/resources/sql/*
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,windows,maven
