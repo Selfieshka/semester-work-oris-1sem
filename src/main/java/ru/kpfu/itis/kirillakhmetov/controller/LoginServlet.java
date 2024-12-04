@@ -27,7 +27,7 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         boolean signInAttempt = securityService.signIn(
-                req, new SignInOwnerDto(
+                new SignInOwnerDto(
                         req.getParameter("email"),
                         req.getParameter("password")
                 ));

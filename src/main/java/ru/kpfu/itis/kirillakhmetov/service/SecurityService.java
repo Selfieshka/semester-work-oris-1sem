@@ -31,7 +31,7 @@ public class SecurityService {
         }
     }
 
-    public boolean signIn(HttpServletRequest req, SignInOwnerDto signInOwnerDto) {
+    public boolean signIn(SignInOwnerDto signInOwnerDto) {
         Optional<Owner> ownerFromDb = ownerDao.findByEmail(signInOwnerDto.email());
         if (ownerFromDb.isPresent()) {
             Owner owner = ownerFromDb.get();
@@ -43,5 +43,9 @@ public class SecurityService {
 
     public boolean isSigned(HttpServletRequest req) {
         return req.getSession().getAttribute("email") != null;
+    }
+
+    public void signOut(HttpServletRequest req) {
+        req.getSession().removeAttribute("email");
     }
 }

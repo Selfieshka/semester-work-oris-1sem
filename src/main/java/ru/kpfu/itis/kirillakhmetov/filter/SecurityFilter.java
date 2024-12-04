@@ -25,7 +25,7 @@ public class SecurityFilter extends HttpFilter {
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         boolean matchPaths = false;
         for (String path : SECURITY_PATHS) {
-            if (path.equals(req.getRequestURI().substring(req.getContextPath().length()))) {
+            if (path.equals(req.getRequestURI().substring(getServletContext().getContextPath().length()))) {
                 matchPaths = true;
                 break;
             }
@@ -33,9 +33,9 @@ public class SecurityFilter extends HttpFilter {
 
         boolean ownerIsSigned = securityService.isSigned(req);
         if (ownerIsSigned && matchPaths) {
-            res.sendRedirect(req.getContextPath() + "/profile");
+            res.sendRedirect(getServletContext().getContextPath() + "/profile");
         } else if (!ownerIsSigned && !matchPaths) {
-            res.sendRedirect(req.getContextPath() + "/login");
+            res.sendRedirect(getServletContext().getContextPath() + "/login");
         } else {
             chain.doFilter(req, res);
         }

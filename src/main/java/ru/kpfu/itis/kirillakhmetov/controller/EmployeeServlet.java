@@ -37,6 +37,6 @@ public class EmployeeServlet extends HttpServlet {
                         Integer.valueOf(req.getParameter("salary"))
                 )
         );
-        resp.sendRedirect(req.getContextPath() + "/staff");
+        resp.sendRedirect(getServletContext().getContextPath() + "/staff");
     }
 }

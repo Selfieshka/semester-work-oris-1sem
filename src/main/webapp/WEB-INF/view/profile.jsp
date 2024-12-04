@@ -7,9 +7,9 @@
     <title>Профиль</title>
 </head>
 <body>
-    <h1>${sessionScope.get("email")}</h1>
-    <form action="<c:url value="/logout"/>">
-        <input type="submit" value="Выйти">
-    </form>
+<h1>${sessionScope.get("email")}</h1>
+<form action="<c:url value="/logout"/>">
+    <input type="submit" value="Выйти">
+</form>
 </body>
 </html>
