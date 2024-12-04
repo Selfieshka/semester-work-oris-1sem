@@ -40,4 +40,8 @@ public class SecurityService {
         }
         return false;
     }
+
+    public boolean isSigned(HttpServletRequest req) {
+        return req.getSession().getAttribute("email") != null;
+    }
 }

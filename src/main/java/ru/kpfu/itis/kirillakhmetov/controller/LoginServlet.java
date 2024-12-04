@@ -34,7 +34,7 @@ public class LoginServlet extends HttpServlet {
 
         if (signInAttempt) {
             req.getSession().setAttribute("email", req.getParameter("email"));
-            getServletContext().getRequestDispatcher("/WEB-INF/view/index.jsp").forward(req, resp);
+            resp.sendRedirect(getServletContext().getContextPath());
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
         }
