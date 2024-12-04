@@ -11,12 +11,10 @@ async function fetchData() {
         const jsonData = JSON.parse(jsonString); // Парсим JSON строку в объект
 
         // Преобразуем в необходимый формат
-        const data = jsonData.map(item => ({
+        return jsonData.map(item => ({
             x: item.x, // предполагаем, что в вашем JSON есть поле `x`
             y: item.y, // предполагаем, что в вашем JSON есть поле `y`
-        }));
-
-        return data; // Возвращаем полученный массив
+        })); // Возвращаем полученный массив
     } catch (error) {
         console.error('Ошибка при получении данных:', error);
         return []; // Возвращаем пустой массив в случае ошибки
