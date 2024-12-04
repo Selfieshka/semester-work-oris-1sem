@@ -14,7 +14,7 @@ public class EmployeeMapper implements RowMapper<Employee> {
                 resultSet.getString("last_name"),
                 resultSet.getString("patronymic"),
                 resultSet.getDate("effective_date").toLocalDate(),
-                resultSet.getString("position_name"),
+                resultSet.getString("name"),
                 resultSet.getInt("salary")
         );
     }

@@ -12,14 +12,14 @@ import java.util.Optional;
 
 public class StaffDao extends BaseDao<Employee> {
     //language=sql
-    private final static String SQL_GET_ALL = """
+    private final static String SQL_FIND_ALL = """
             SELECT * FROM employee
                 INNER JOIN position USING(position_id)
             """;
     //language=sql
     private final static String SQL_SAVE = """
             INSERT INTO employee(first_name, last_name, patronymic, effective_date, position_id, salary)
-            VALUES (?, ?, ?, ?, (SELECT position_id FROM position WHERE position_name = ?), ?)
+            VALUES (?, ?, ?, ?, (SELECT position_id FROM position WHERE name = ?), ?)
             """;
 
     public StaffDao() {
@@ -30,7 +30,7 @@ public class StaffDao extends BaseDao<Employee> {
     public List<Employee> findAll() {
         try (Connection connection = ConnectionProvider.getConnection();
              Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(SQL_GET_ALL)) {
+             ResultSet resultSet = statement.executeQuery(SQL_FIND_ALL)) {
 
             List<Employee> result = new ArrayList<>();
             while (resultSet.next()) {
@@ -39,7 +39,7 @@ public class StaffDao extends BaseDao<Employee> {
 
             return result;
         } catch (SQLException e) {
-            throw new RuntimeException("Can't get all employee");
+            throw new RuntimeException("Can't find all employee");
         }
     }
 
@@ -52,6 +52,7 @@ public class StaffDao extends BaseDao<Employee> {
     public void save(Employee employee) {
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
+
             statement.setString(1, employee.getFirstName());
             statement.setString(2, employee.getLastName());
             statement.setString(3, employee.getPatronymic());

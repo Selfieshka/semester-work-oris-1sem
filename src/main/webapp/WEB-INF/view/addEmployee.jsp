@@ -30,7 +30,7 @@
     </select>
 
     <label for="salary">Зарплата:</label>
-    <input type="text" id="salary" name="salary" required>
+    <input type="number" id="salary" name="salary" required>
 
     <button type="submit">Отправить</button>
 </form>
