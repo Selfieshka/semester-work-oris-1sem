@@ -19,8 +19,9 @@
     <a href="<c:url value="/"/>">Главная</a>
     <a href="<c:url value="/staff"/>">Сотрудники</a>
     <a href="<c:url value="/finance"/>">Финансы</a>
+    <a href="<c:url value="/invoices"/>">Накладные</a>
     <c:if test="${not empty sessionScope.get('email')}">
-    <a href="<c:url value="/profile"/>">Профиль</a>
+        <a href="<c:url value="/profile"/>">Профиль</a>
     </c:if>
     <c:if test="${empty sessionScope.get('email')}">
         <a href="<c:url value="/login"/>">Вход</a>
