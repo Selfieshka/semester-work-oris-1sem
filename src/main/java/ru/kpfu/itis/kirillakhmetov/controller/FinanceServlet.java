@@ -21,6 +21,6 @@ public class FinanceServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         getServletContext().setAttribute("info", financeService.getInfo());
-        getServletContext().getRequestDispatcher("/WEB-INF/view/finance-info.jsp").forward(req, resp);
+        getServletContext().getRequestDispatcher("/WEB-INF/view/finance.jsp").forward(req, resp);
     }
 }
