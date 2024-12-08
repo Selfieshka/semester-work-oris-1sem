@@ -2,6 +2,7 @@ package ru.kpfu.itis.kirillakhmetov.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
+import ru.kpfu.itis.kirillakhmetov.dto.OwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignInOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Owner;
@@ -47,5 +48,19 @@ public class SecurityService {
 
     public void signOut(HttpServletRequest req) {
         req.getSession().removeAttribute("email");
+    }
+
+    public Optional<OwnerDto> getProfileInfo(String email) {
+        Optional<Owner> ownerFromDb = ownerDao.findByEmail(email);
+        if (ownerFromDb.isPresent()) {
+            Owner owner = ownerFromDb.get();
+            return Optional.of(new OwnerDto(
+                    owner.getFirstName(),
+                    owner.getLastName(),
+                    owner.getPatronymic(),
+                    owner.getAge(),
+                    owner.getEmail()));
+        }
+        return Optional.empty();
     }
 }
