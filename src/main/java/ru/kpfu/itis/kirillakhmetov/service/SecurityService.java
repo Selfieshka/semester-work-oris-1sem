@@ -48,6 +48,7 @@ public class SecurityService {
 
     public void signOut(HttpServletRequest req) {
         req.getSession().removeAttribute("email");
+        req.getSession().removeAttribute("owner");
     }
 
     public Optional<OwnerDto> getProfileInfo(String email) {
@@ -59,8 +60,28 @@ public class SecurityService {
                     owner.getLastName(),
                     owner.getPatronymic(),
                     owner.getAge(),
-                    owner.getEmail()));
+                    owner.getEmail(),
+                    owner.getPhoneNumber()));
         }
         return Optional.empty();
+    }
+
+    public OwnerDto changePersonalData(OwnerDto ownerDto) {
+        ownerDao.update(Owner.builder()
+                .firstName(ownerDto.firstName())
+                .lastName(ownerDto.lastName())
+                .patronymic(ownerDto.patronymic())
+                .age(ownerDto.age())
+                .email(ownerDto.email())
+                .phoneNumber(ownerDto.phoneNumber())
+                .build());
+        Owner updatedOwner = ownerDao.findByEmail(ownerDto.email()).get();
+        return new OwnerDto(
+                updatedOwner.getFirstName(),
+                updatedOwner.getLastName(),
+                updatedOwner.getPatronymic(),
+                updatedOwner.getAge(),
+                updatedOwner.getEmail(),
+                updatedOwner.getPhoneNumber());
     }
 }

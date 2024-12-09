@@ -19,6 +19,16 @@ public class OwnerDao extends BaseDao<Owner> {
             """;
     // language=sql
     private static final String SQL_FIND_BY_EMAIL = "SELECT * FROM owner WHERE email = ?";
+    //language=sql
+    private static final String SQL_UPDATE = """
+                UPDATE owner
+                SET first_name = ?,
+                    last_name = ?,
+                    patronymic = ?,
+                    age = ?,
+                    phone_number = ?
+                WHERE email = ?
+            """;
 
     public OwnerDao() {
         this.mapper = new OwnerMapper();
@@ -56,13 +66,29 @@ public class OwnerDao extends BaseDao<Owner> {
 
     public Optional<Owner> findByEmail(String email) {
         try (Connection connection = ConnectionProvider.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_BY_EMAIL)) {
-            preparedStatement.setString(1, email);
-            ResultSet resultSet = preparedStatement.executeQuery();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_BY_EMAIL)) {
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(mapper.mapRow(resultSet));
             }
             return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int update(Owner owner) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE)) {
+            statement.setString(1, owner.getFirstName());
+            statement.setString(2, owner.getLastName());
+            statement.setString(3, owner.getPatronymic());
+            statement.setInt(4, owner.getAge());
+            statement.setString(5, owner.getPhoneNumber());
+            statement.setString(6, owner.getEmail());
+            System.out.println(statement);
+            return statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

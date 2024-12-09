@@ -26,4 +26,20 @@ public class ProfileServlet extends HttpServlet {
         req.getSession().setAttribute("owner", owner);
         getServletContext().getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(req, resp);
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        OwnerDto updatedOwnerDto = securityService.changePersonalData(new OwnerDto(
+                req.getParameter("firstName"),
+                req.getParameter("lastName"),
+                req.getParameter("patronymic"),
+                Integer.parseInt(req.getParameter("age")),
+                (String) req.getSession().getAttribute("email"),
+                req.getParameter("phoneNumber")
+        ));
+        req.getSession().removeAttribute("owner");
+        req.getSession().setAttribute("owner", updatedOwnerDto);
+        System.out.println(updatedOwnerDto);
+        resp.sendRedirect(getServletContext().getContextPath() + "/profile");
+    }
 }

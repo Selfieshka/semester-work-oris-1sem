@@ -17,5 +17,6 @@ public class Owner {
     private int age;
     private String email;
     private String password;
+    private String phoneNumber;
     private String businessName;
 }

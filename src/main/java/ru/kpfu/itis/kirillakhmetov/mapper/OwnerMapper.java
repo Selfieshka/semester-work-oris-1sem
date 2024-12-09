@@ -16,6 +16,7 @@ public class OwnerMapper implements RowMapper<Owner> {
                 resultSet.getInt("age"),
                 resultSet.getString("email"),
                 resultSet.getString("password"),
+                resultSet.getString("phone_number"),
                 resultSet.getString("business_name")
         );
     }

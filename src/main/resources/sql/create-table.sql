@@ -83,6 +83,7 @@ CREATE TABLE owner
     patronymic    VARCHAR(30),
     age           INTEGER,
     email         VARCHAR(255) NOT NULL,
+    phone_number  VARCHAR(30),
     password      TEXT         NOT NULL,
     business_name VARCHAR(30)  NOT NULL,
     -----------------------------------

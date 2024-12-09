@@ -151,6 +151,20 @@ form button {
     background-color: #4053c9;
 }
 
+.btn-edit {
+    width: 8em;
+    height: 3em;
+    cursor: pointer;
+    border: 1px solid #458ff6;
+    border-radius: 2em;
+    color: #1e293b;
+    font-weight: bold;
+    margin-right: 5px;
+    background-color: #fff;
+    transition-duration: 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.1);
+}
+
 .account-edit {
     display: flex;
     justify-content: space-between;
@@ -198,4 +212,8 @@ form button {
 .input-container textarea:focus {
     outline: none;
     border: 1.5px solid #536dfe;
+}
+
+.hidden {
+    display: none !important;
 }
