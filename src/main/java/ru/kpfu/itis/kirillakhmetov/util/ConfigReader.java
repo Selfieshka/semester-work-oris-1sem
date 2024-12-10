@@ -16,7 +16,7 @@ public final class ConfigReader {
         loadConfig();
     }
 
-    public static void loadConfig() {
+    private static void loadConfig() {
         try (InputStream input = ConfigReader.class.getClassLoader().getResourceAsStream(NAME_APPLICATION_FILE)) {
             PROPERTIES.load(input);
         } catch (IOException e) {
