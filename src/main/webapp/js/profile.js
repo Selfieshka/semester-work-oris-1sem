@@ -1,7 +1,6 @@
 const editButton = document.getElementById('editButton');
 const cancelButton = document.getElementById('cancelButton');
 const saveButton = document.getElementById('saveButton');
-const inputs = document.querySelectorAll('.account input');
 
 let originalValues = {};
 
@@ -36,26 +35,70 @@ cancelButton.addEventListener('click', function () {
     saveButton.classList.add('hidden');
 });
 
-$(document).ready(function() {
-    $('#accountForm').on('submit', function(event) {
-        event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+// $(document).ready(function () {
+//     $('#accountForm').on('submit', function (event) {
+//         event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
+//
+//         var formData = $(this).serialize(); // Сериализуем данные формы
+//
+//         $.ajax({
+//             type: 'POST',
+//             url: '/BusinessEfficiency/profile',
+//             data: formData,
+//             success: function (response) {
+//                 // Обработка успешного ответа от сервера
+//                 if (response.redirectUrl) {
+//                     window.location.href = response.redirectUrl; // Выполняем редирект
+//                 }
+//                 console.log('Успешно отправлено:', response);
+//             },
+//             error: function (xhr, status, error) {
+//                 // Обработка ошибки
+//                 console.error('Ошибка при отправке:', error);
+//             }
+//         });
+//     });
+// });
 
-        var formData = $(this).serialize(); // Сериализуем данные формы
+
+$(document).ready(function () {
+    // Обработчик для клика на изображении профиля
+    $("#profile-image").click(function () {
+        $("#file-input").click(); // Открываем диалог выбора файла
+    });
+
+    // Обработчик для выбора файла
+    $("#file-input").change(function (event) {
+        var file = event.target.files[0]; // Получаем выбранный файл
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#profile-image").attr("src", e.target.result); // Отображаем загруженное изображение
+                sendFileToServer(file);
+            };
+            reader.readAsDataURL(file); // Читаем файл как Data URL (для предварительного просмотра)
+        }
+    });
+
+    function sendFileToServer(file) {
+        var formData = new FormData();
+        formData.append('profilePhoto', file); // Добавляем файл в объект FormData
 
         $.ajax({
+            url: '/BusinessEfficiency/profile/upload',
             type: 'POST',
-            url: '/profile',
             data: formData,
-            success: function(response) {
-                // Обработка успешного ответа от сервера
-                console.log('Успешно отправлено:', response);
+            contentType: false, // jQuery сам установит нужные заголовки
+            processData: false, // Не обрабатываем данные
+            success: function (response) {
+                console.log('Изображение успешно загружено:', response);
             },
-            error: function(xhr, status, error) {
-                // Обработка ошибки
-                console.error('Ошибка при отправке:', error);
+            error: function (xhr, status, error) {
+                console.error('Ошибка загрузки:', error);
+
             }
         });
-    });
+    }
 });
 
 

@@ -19,4 +19,5 @@ public class Owner {
     private String password;
     private String phoneNumber;
     private String businessName;
+    private String profilePhotoUrl;
 }

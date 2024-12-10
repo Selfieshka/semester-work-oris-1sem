@@ -6,22 +6,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.OwnerDto;
-import ru.kpfu.itis.kirillakhmetov.service.SecurityService;
+import ru.kpfu.itis.kirillakhmetov.service.OwnerService;
 
 import java.io.IOException;
 
 @WebServlet("/profile")
 public class ProfileServlet extends HttpServlet {
-    private SecurityService securityService;
+    private OwnerService ownerService;
 
     @Override
     public void init() throws ServletException {
-        securityService = (SecurityService) getServletContext().getAttribute("securityService");
+        ownerService = (OwnerService) getServletContext().getAttribute("ownerService");
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OwnerDto owner = securityService.getProfileInfo((String) req.getSession().getAttribute("email"))
+        OwnerDto owner = ownerService.getProfileInfo(((OwnerDto) req.getSession().getAttribute("owner")).email())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         req.getSession().setAttribute("owner", owner);
         getServletContext().getRequestDispatcher("/WEB-INF/view/profile.jsp").forward(req, resp);
@@ -29,17 +29,20 @@ public class ProfileServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        OwnerDto updatedOwnerDto = securityService.changePersonalData(new OwnerDto(
+        String email = ((OwnerDto) req.getSession().getAttribute("owner")).email();
+        ownerService.changePersonalData(new OwnerDto(
                 req.getParameter("firstName"),
                 req.getParameter("lastName"),
                 req.getParameter("patronymic"),
                 Integer.parseInt(req.getParameter("age")),
-                (String) req.getSession().getAttribute("email"),
-                req.getParameter("phoneNumber")
+                email,
+                req.getParameter("phoneNumber"),
+                null
         ));
-        req.getSession().removeAttribute("owner");
-        req.getSession().setAttribute("owner", updatedOwnerDto);
-        System.out.println(updatedOwnerDto);
+        OwnerDto owner = ownerService.getProfileInfo(email).orElseThrow();
+        req.getSession().setAttribute("owner", owner);
         resp.sendRedirect(getServletContext().getContextPath() + "/profile");
+//        resp.setContentType("application/json");
+//        resp.getWriter().write("{\"redirectUrl\": \"%s\"}".formatted(getServletContext().getContextPath() + "/profile"));
     }
 }

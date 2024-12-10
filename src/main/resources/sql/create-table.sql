@@ -77,15 +77,16 @@ CREATE SEQUENCE owner_sequence
 
 CREATE TABLE owner
 (
-    owner_id      BIGINT       NOT NULL DEFAULT NEXTVAL('owner_sequence'),
-    first_name    VARCHAR(30)  NOT NULL,
-    last_name     VARCHAR(30),
-    patronymic    VARCHAR(30),
-    age           INTEGER,
-    email         VARCHAR(255) NOT NULL,
-    phone_number  VARCHAR(30),
-    password      TEXT         NOT NULL,
-    business_name VARCHAR(30)  NOT NULL,
+    owner_id          BIGINT       NOT NULL DEFAULT NEXTVAL('owner_sequence'),
+    first_name        VARCHAR(30)  NOT NULL,
+    last_name         VARCHAR(30),
+    patronymic        VARCHAR(30),
+    age               INTEGER,
+    email             VARCHAR(255) NOT NULL,
+    phone_number      VARCHAR(30),
+    password          TEXT         NOT NULL,
+    business_name     VARCHAR(30)  NOT NULL,
+    profile_photo_url VARCHAR(255),
     -----------------------------------
     CONSTRAINT owner_id_pk PRIMARY KEY (owner_id),
     CONSTRAINT owner_email_uq UNIQUE (email)

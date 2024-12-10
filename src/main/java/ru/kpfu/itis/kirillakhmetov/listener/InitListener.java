@@ -7,10 +7,7 @@ import ru.kpfu.itis.kirillakhmetov.dao.FinanceDao;
 import ru.kpfu.itis.kirillakhmetov.dao.InvoiceDao;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
 import ru.kpfu.itis.kirillakhmetov.dao.StaffDao;
-import ru.kpfu.itis.kirillakhmetov.service.FinanceService;
-import ru.kpfu.itis.kirillakhmetov.service.InvoiceService;
-import ru.kpfu.itis.kirillakhmetov.service.SecurityService;
-import ru.kpfu.itis.kirillakhmetov.service.StaffService;
+import ru.kpfu.itis.kirillakhmetov.service.*;
 
 @WebListener
 public class InitListener implements ServletContextListener {
@@ -25,10 +22,12 @@ public class InitListener implements ServletContextListener {
         SecurityService securityService = new SecurityService(ownerDao);
         FinanceService financeService = new FinanceService(financeDao);
         InvoiceService invoiceService = new InvoiceService(invoiceDao);
+        OwnerService ownerService = new OwnerService(ownerDao);
 
         sce.getServletContext().setAttribute("staffService", staffService);
         sce.getServletContext().setAttribute("securityService", securityService);
         sce.getServletContext().setAttribute("financeService", financeService);
         sce.getServletContext().setAttribute("invoiceService", invoiceService);
+        sce.getServletContext().setAttribute("ownerService", ownerService);
     }
 }

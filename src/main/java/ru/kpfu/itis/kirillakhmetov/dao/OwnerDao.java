@@ -30,6 +30,19 @@ public class OwnerDao extends BaseDao<Owner> {
                 WHERE email = ?
             """;
 
+    //language=sql
+    private static final String SQL_DELETE_BY_EMAIL = """
+            DELETE FROM owner
+            WHERE email = ?
+            """;
+
+    //language=sql
+    private static final String SQL_UPDATE_PROFILE_PHOTO_URL_BY_EMAIL = """
+            UPDATE owner
+            SET profile_photo_url = ?
+            WHERE email = ?
+            """;
+
     public OwnerDao() {
         this.mapper = new OwnerMapper();
     }
@@ -87,8 +100,28 @@ public class OwnerDao extends BaseDao<Owner> {
             statement.setInt(4, owner.getAge());
             statement.setString(5, owner.getPhoneNumber());
             statement.setString(6, owner.getEmail());
-            System.out.println(statement);
             return statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean deleteByEmail(String email) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_BY_EMAIL)) {
+            statement.setString(1, email);
+            return statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProfilePhotoUrlByEmail(String url, String email) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_PROFILE_PHOTO_URL_BY_EMAIL)) {
+            statement.setString(1, url);
+            statement.setString(2, email);
+            statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

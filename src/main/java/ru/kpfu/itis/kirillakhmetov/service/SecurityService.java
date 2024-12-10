@@ -2,7 +2,6 @@ package ru.kpfu.itis.kirillakhmetov.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
-import ru.kpfu.itis.kirillakhmetov.dto.OwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignInOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Owner;
@@ -43,45 +42,10 @@ public class SecurityService {
     }
 
     public boolean isSigned(HttpServletRequest req) {
-        return req.getSession().getAttribute("email") != null;
+        return req.getSession().getAttribute("owner") != null;
     }
 
     public void signOut(HttpServletRequest req) {
-        req.getSession().removeAttribute("email");
         req.getSession().removeAttribute("owner");
-    }
-
-    public Optional<OwnerDto> getProfileInfo(String email) {
-        Optional<Owner> ownerFromDb = ownerDao.findByEmail(email);
-        if (ownerFromDb.isPresent()) {
-            Owner owner = ownerFromDb.get();
-            return Optional.of(new OwnerDto(
-                    owner.getFirstName(),
-                    owner.getLastName(),
-                    owner.getPatronymic(),
-                    owner.getAge(),
-                    owner.getEmail(),
-                    owner.getPhoneNumber()));
-        }
-        return Optional.empty();
-    }
-
-    public OwnerDto changePersonalData(OwnerDto ownerDto) {
-        ownerDao.update(Owner.builder()
-                .firstName(ownerDto.firstName())
-                .lastName(ownerDto.lastName())
-                .patronymic(ownerDto.patronymic())
-                .age(ownerDto.age())
-                .email(ownerDto.email())
-                .phoneNumber(ownerDto.phoneNumber())
-                .build());
-        Owner updatedOwner = ownerDao.findByEmail(ownerDto.email()).get();
-        return new OwnerDto(
-                updatedOwner.getFirstName(),
-                updatedOwner.getLastName(),
-                updatedOwner.getPatronymic(),
-                updatedOwner.getAge(),
-                updatedOwner.getEmail(),
-                updatedOwner.getPhoneNumber());
     }
 }

@@ -58,6 +58,14 @@ body {
     border-radius: 10px;
 }
 
+.menu-link.logout {
+    color: #f52020;
+}
+
+.menu-link.delete {
+    color: #f52020;
+}
+
 .menu-icon {
     margin-right: 10px;
 }
@@ -109,6 +117,10 @@ form button {
     color: #1e293b;
     font-weight: 500;
     margin-left: 10px;
+}
+
+.profile-email {
+    margin-top: 22px;
 }
 
 .btn-container {
