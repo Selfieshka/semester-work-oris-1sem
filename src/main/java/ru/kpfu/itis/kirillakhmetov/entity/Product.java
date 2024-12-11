@@ -6,8 +6,10 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class Product {
+    private Long id;
+    private Long invoice_id;
     private String name;
-    private String unitMeasure;
-    private Double quantity;
-    private Double costPerUnit;
+    private String measurementUnit;
+    private int quantity;
+    private double costPerUnit;
 }

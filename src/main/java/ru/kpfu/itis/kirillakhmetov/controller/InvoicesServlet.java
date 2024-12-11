@@ -7,9 +7,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import ru.kpfu.itis.kirillakhmetov.dto.InvoiceDto;
 import ru.kpfu.itis.kirillakhmetov.service.InvoiceService;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Map;
 
 @WebServlet("/invoices")
@@ -38,8 +40,12 @@ public class InvoicesServlet extends HttpServlet {
         );
 
         if (invoiceService.checkExtension(invoice)) {
-            invoiceService.analyze(invoice, headerNames);
-            resp.sendRedirect(getServletContext().getContextPath() + "/invoice");
+            invoiceService.saveInvoiceInfo(new InvoiceDto(
+                    (Long) req.getSession().getAttribute("id"),
+                    req.getParameter("number"),
+                    LocalDate.parse(req.getParameter("date"))
+            ), invoice, headerNames);
+            resp.sendRedirect(getServletContext().getContextPath() + "/invoices");
         } else {
             throw new RuntimeException("Неподдерживаемый тип файла");
         }

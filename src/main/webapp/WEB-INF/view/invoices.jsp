@@ -9,10 +9,14 @@
 </head>
 <body>
 <form method="POST" enctype="multipart/form-data">
+    <label for="number">Введите номер накладной:</label>
+    <input type="text" id="number" name="number" required/>
+    <label for="date">Введите дату накладной:</label>
+    <input type="date" id="date" name="date" required/>
     <label for="invoice">Выберите файл накладной:</label>
     <input type="file" id="invoice" name="invoice" required/>
 
-    <h3>Выберите необходимые поля для анализа накладной:</h3>
+    <h3>Заполните необходимые поля для анализа накладной:</h3>
 
     <label for="productName">Название колонки наименования товара</label>
     <input type="text" id="productName" name="productName" required/>

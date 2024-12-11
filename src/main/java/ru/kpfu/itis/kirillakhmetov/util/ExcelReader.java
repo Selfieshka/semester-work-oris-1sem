@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ru.kpfu.itis.kirillakhmetov.entity.Product;
+import ru.kpfu.itis.kirillakhmetov.dto.ProductDto;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,10 +17,10 @@ import java.util.Map;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExcelReader {
 
-    public static List<Product> readAllProductsByColumns(InputStream excelInputStream, Map<String, String> headerNames) {
+    public static List<ProductDto> readAllProductsByColumns(InputStream excelInputStream, Map<String, String> headerNames) {
         try (Workbook workbook = new XSSFWorkbook(excelInputStream)) {
             Sheet sheet = workbook.getSheetAt(0);
-            List<Product> products = new ArrayList<>();
+            List<ProductDto> products = new ArrayList<>();
 
             Map<String, Integer> columnIndices = getColumnIndexes(sheet.getRow(0), headerNames);
 
@@ -34,10 +34,10 @@ public final class ExcelReader {
                 Double costPerUnitValue = getCellValue(row, columnIndices.get(headerNames.get("costPerUnit")), CellType.NUMERIC);
 
                 if (productNameValue != null && unitMeasureValue != null && quantityValue != null && costPerUnitValue != null) {
-                    products.add(new Product(
+                    products.add(new ProductDto(
                             productNameValue,
                             unitMeasureValue,
-                            quantityValue,
+                            quantityValue.intValue(),
                             costPerUnitValue));
                 }
             }

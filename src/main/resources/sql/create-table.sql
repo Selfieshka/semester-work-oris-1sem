@@ -87,9 +87,51 @@ CREATE TABLE owner
     password          TEXT         NOT NULL,
     business_name     VARCHAR(30)  NOT NULL,
     profile_photo_url VARCHAR(255),
-    -----------------------------------
+    ------------------------------
     CONSTRAINT owner_id_pk PRIMARY KEY (owner_id),
     CONSTRAINT owner_email_uq UNIQUE (email)
 );
 
 
+CREATE SEQUENCE invoice_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE invoice
+(
+    invoice_id BIGINT      NOT NULL DEFAULT NEXTVAL('invoice_sequence'),
+    owner_id   BIGINT      NOT NULL,
+    number     VARCHAR(30) NOT NULL,
+    date       DATE        NOT NULL,
+    -------------------------------
+    CONSTRAINT invoice_id_pk PRIMARY KEY (invoice_id),
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
+);
+
+COMMENT ON TABLE invoice IS 'Таблица накладных';
+
+
+CREATE SEQUENCE product_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE product
+(
+    product_id       BIGINT         NOT NULL DEFAULT NEXTVAL('product_sequence'),
+    invoice_id       BIGINT         NOT NULL,
+    name             VARCHAR(100)   NOT NULL,
+    measurement_unit VARCHAR(10)    NOT NULL,
+    quantity         INT            NOT NULL,
+    unit_price       NUMERIC(12, 2) NOT NULL,
+    ----------------------------------------
+    CONSTRAINT product_id_pk PRIMARY KEY (product_id),
+    CONSTRAINT invoice_id_fk FOREIGN KEY (invoice_id) REFERENCES invoice (invoice_id) ON DELETE CASCADE
+);
+
+COMMENT ON TABLE invoice IS 'Таблица товаров из накладных';
+COMMENT ON COLUMN product.name IS 'Наименование товара';
+COMMENT ON COLUMN product.measurement_unit IS 'Единица измерения товара';
+COMMENT ON COLUMN product.quantity IS 'Количество товара';
+COMMENT ON COLUMN product.unit_price IS 'Цена за единицу товара';

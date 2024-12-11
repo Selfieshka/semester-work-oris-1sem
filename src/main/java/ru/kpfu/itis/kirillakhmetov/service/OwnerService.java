@@ -17,6 +17,10 @@ public class OwnerService {
         this.ownerDao = ownerDao;
     }
 
+    public Long getOwnerIdByEmail(String email) {
+        return ownerDao.findByEmail(email).get().getId();
+    }
+
     public Optional<OwnerDto> getProfileInfo(String email) {
         Optional<Owner> ownerFromDb = ownerDao.findByEmail(email);
         if (ownerFromDb.isPresent()) {

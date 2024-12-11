@@ -1,0 +1,13 @@
+package ru.kpfu.itis.kirillakhmetov.mapper;
+
+import ru.kpfu.itis.kirillakhmetov.entity.Invoice;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+public class InvoiceMapper implements RowMapper<Invoice> {
+    @Override
+    public Invoice mapRow(ResultSet resultSet) throws SQLException {
+        return null;
+    }
+}

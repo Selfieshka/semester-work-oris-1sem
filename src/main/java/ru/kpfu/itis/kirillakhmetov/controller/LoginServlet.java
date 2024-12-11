@@ -39,6 +39,7 @@ public class LoginServlet extends HttpServlet {
             Optional<OwnerDto> ownerFromBd = ownerService.getProfileInfo(email);
             if (ownerFromBd.isPresent()) {
                 OwnerDto owner = ownerFromBd.get();
+                req.getSession().setAttribute("id", ownerService.getOwnerIdByEmail(email));
                 req.getSession().setAttribute("owner", owner);
             }
             resp.sendRedirect(getServletContext().getContextPath());

@@ -46,6 +46,7 @@ public class SecurityService {
     }
 
     public void signOut(HttpServletRequest req) {
+        req.getSession().removeAttribute("id");
         req.getSession().removeAttribute("owner");
     }
 }

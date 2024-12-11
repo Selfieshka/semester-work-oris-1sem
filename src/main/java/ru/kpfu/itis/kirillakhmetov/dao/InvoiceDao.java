@@ -1,29 +1,83 @@
 package ru.kpfu.itis.kirillakhmetov.dao;
 
-import ru.kpfu.itis.kirillakhmetov.entity.Product;
+import ru.kpfu.itis.kirillakhmetov.dto.InvoiceDto;
+import ru.kpfu.itis.kirillakhmetov.dto.ProductDto;
+import ru.kpfu.itis.kirillakhmetov.entity.Invoice;
+import ru.kpfu.itis.kirillakhmetov.mapper.InvoiceMapper;
+import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
-public class InvoiceDao extends BaseDao<Product> {
+public class InvoiceDao extends BaseDao<Invoice> {
+    //language=sql
+    private static final String SQL_SAVE_INVOICE_AND_RETURN_ID = """
+            INSERT INTO invoice(owner_id, number, date)
+            VALUES (?, ?, ?)
+            RETURNING invoice_id
+            """;
+
+    //language=sql
+    private static final String SQL_SAVE_ALL_PRODUCTS = """
+            INSERT INTO product(invoice_id, name, measurement_unit, quantity, unit_price)
+            VALUES (?, ?, ?, ?, ?)
+            """;
+
+    public InvoiceDao() {
+        this.mapper = new InvoiceMapper();
+    }
 
     @Override
-    public List<Product> findAll() {
+    public List<Invoice> findAll() {
         return List.of();
     }
 
     @Override
-    public Optional<Product> findById(Long id) {
+    public Optional<Invoice> findById(Long id) {
         return Optional.empty();
     }
 
     @Override
-    public void save(Product product) {
-
+    public void save(Invoice invoice) {
     }
 
     @Override
     public boolean deleteById(Long id) {
         return false;
+    }
+
+    public void saveInvoiceWithProducts(InvoiceDto invoiceDto, List<ProductDto> products) {
+        Connection connection = ConnectionProvider.getConnection();
+        try (connection;
+             PreparedStatement statementForInvoice = connection.prepareStatement(SQL_SAVE_INVOICE_AND_RETURN_ID);
+             PreparedStatement statementForProduct = connection.prepareStatement(SQL_SAVE_ALL_PRODUCTS)) {
+            connection.setAutoCommit(false);
+            statementForInvoice.setLong(1, invoiceDto.ownerId());
+            statementForInvoice.setString(2, invoiceDto.number());
+            statementForInvoice.setDate(3, Date.valueOf(invoiceDto.date()));
+            ResultSet resultSet = statementForInvoice.executeQuery();
+
+            if (resultSet.next()) {
+                long invoiceId = resultSet.getLong("invoice_id");
+                for (ProductDto product : products) {
+                    statementForProduct.setLong(1, invoiceId);
+                    statementForProduct.setString(2, product.name());
+                    statementForProduct.setString(3, product.measurementUnit());
+                    statementForProduct.setInt(4, product.quantity());
+                    statementForProduct.setDouble(5, product.costPerUnit());
+                    statementForProduct.addBatch();
+                }
+                statementForProduct.executeBatch();
+                connection.commit();
+            }
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
     }
 }
