@@ -1,4 +1,130 @@
-label, button {
-    display: block;
-    margin-bottom: 5px;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.invoice-row {
+    background: #ffffff;
+    margin: 16px 0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.invoice-row:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.invoice-row h3 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.invoice-row p {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 20px;
+}
+
+.modal {
+    display: none; /* Скрыто по умолчанию */
+    position: fixed; /* Остается на месте */
+    z-index: 1; /* Сверху остальных элементов */
+    left: 0;
+    top: 0;
+    width: 100%; /* Полная ширина */
+    height: 100%; /* Полная высота */
+    overflow: auto; /* Включает прокрутку если необходимо */
+    background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачный фон */
+    backdrop-filter: blur(5px); /* Эффект размытия фона */
+}
+
+/* Стили для содержимого модального окна */
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto; /* 10% сверху и центрировано */
+    padding: 30px;
+    border: none;
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5); /* Тень вокруг окна */
+    width: 90%; /* Максимальная ширина */
+    max-width: 600px; /* Ограничение максимальной ширины */
+    transition: all 0.3s ease; /* Плавный переход */
+}
+
+/* Стили для кнопки закрытия */
+.close {
+    color: #333;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #e74c3c; /* Красный цвет при наведении */
+    text-decoration: none;
+}
+
+/* Стили для формы */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px; /* Закругленные углы для полей ввода */
+    transition: border 0.3s;
+}
+
+input:focus {
+    border-color: #3498db; /* Цвет рамки при фокусе */
+    outline: none; /* Убираем обводку */
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #2980b9; /* Темный цвет при наведении */
 }

@@ -7,6 +7,7 @@ import ru.kpfu.itis.kirillakhmetov.mapper.InvoiceMapper;
 import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,13 @@ public class InvoiceDao extends BaseDao<Invoice> {
             INSERT INTO product(invoice_id, name, measurement_unit, quantity, unit_price)
             VALUES (?, ?, ?, ?, ?)
             """;
+
+    //language=sql
+    private static final String SQL_FIND_ALL_LAZY_BY_OWNER_ID = """
+            SELECT * FROM invoice
+            WHERE owner_id = ?
+            """;
+
 
     public InvoiceDao() {
         this.mapper = new InvoiceMapper();
@@ -78,6 +86,21 @@ public class InvoiceDao extends BaseDao<Invoice> {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+        }
+    }
+
+    public List<Invoice> findAllLazyByOwnerId(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_FIND_ALL_LAZY_BY_OWNER_ID)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            List<Invoice> invoices = new ArrayList<>();
+            while (resultSet.next()) {
+                invoices.add(mapper.mapRow(resultSet));
+            }
+            return invoices;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

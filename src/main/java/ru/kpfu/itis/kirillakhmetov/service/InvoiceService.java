@@ -5,10 +5,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbookType;
 import ru.kpfu.itis.kirillakhmetov.dao.InvoiceDao;
 import ru.kpfu.itis.kirillakhmetov.dto.InvoiceDto;
 import ru.kpfu.itis.kirillakhmetov.dto.ProductDto;
+import ru.kpfu.itis.kirillakhmetov.entity.Invoice;
 import ru.kpfu.itis.kirillakhmetov.util.ExcelReader;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,5 +38,18 @@ public class InvoiceService {
         String fileName = part.getSubmittedFileName();
         String fileExtension = fileName.substring(fileName.lastIndexOf('.') + 1).toUpperCase();
         return fileExtension.equals(XSSFWorkbookType.XLSX.name());
+    }
+
+    public List<InvoiceDto> getAllInvoices(Long id) {
+        List<Invoice> invoices = invoiceDao.findAllLazyByOwnerId(id);
+        List<InvoiceDto> invoiceDtos = new ArrayList<>();
+        for (Invoice invoice : invoices) {
+            invoiceDtos.add(new InvoiceDto(
+                    invoice.getOwner_id(),
+                    invoice.getNumber(),
+                    invoice.getDate()
+            ));
+        }
+        return invoiceDtos;
     }
 }

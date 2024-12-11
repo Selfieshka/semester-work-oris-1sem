@@ -8,6 +8,11 @@ import java.sql.SQLException;
 public class InvoiceMapper implements RowMapper<Invoice> {
     @Override
     public Invoice mapRow(ResultSet resultSet) throws SQLException {
-        return null;
+        return Invoice.builder()
+                .id(resultSet.getLong("invoice_id"))
+                .owner_id(resultSet.getLong("owner_id"))
+                .number(resultSet.getString("number"))
+                .date(resultSet.getDate("date").toLocalDate())
+                .build();
     }
 }
