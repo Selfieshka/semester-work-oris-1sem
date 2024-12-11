@@ -12,13 +12,13 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #141414 url('../img/registration.svg') no-repeat center center fixed;
+    background: #f5f5f5 url('../img/registration.svg') no-repeat center center fixed;
     background-size: cover;
 }
 
 .wrapper {
     width: 420px;
-    color: #fff;
+    color: #333;
 }
 
 .wrapper h1 {
@@ -47,17 +47,17 @@ body {
 .input-box input {
     width: 100%;
     height: 100%;
-    background: #2a2a2a;
-    border: none;
+    background: #ffffff;
+    border: 1px solid #cccccc;
     outline: none;
     border-radius: 10px;
     font-size: 20px;
-    color: #fff;
+    color: #333;
     padding: 20px 45px 20px 30px;
 }
 
 .input-box input::placeholder {
-    color: #737373;
+    color: #adadad;
 }
 
 .wrapper .btn {
@@ -65,12 +65,12 @@ body {
     position: relative;
     left: 13%;
     height: 45px;
-    background: #ec7f00;
+    background: #fdd017;
     border: none;
     border-radius: 10px;
     cursor: pointer;
     font-size: 20px;
-    color: #fff;
+    color: #ffffff;
     margin-top: 50px;
 }
 
