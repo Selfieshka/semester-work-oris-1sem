@@ -36,4 +36,26 @@ public class FinanceService {
         }
         return jsonObject;
     }
+
+    public void addRevenue(FinanceDto financeDto) {
+        financeDao.save(Finance.builder()
+                .owner_id(financeDto.owner_id())
+                .type("Доход")
+                .amount(financeDto.amount())
+                .category(financeDto.category())
+                .date(financeDto.date())
+                .build()
+        );
+    }
+
+    public void addExpense(FinanceDto financeDto) {
+        financeDao.save(Finance.builder()
+                .owner_id(financeDto.owner_id())
+                .type("Расход")
+                .amount(financeDto.amount())
+                .category(financeDto.category())
+                .date(financeDto.date())
+                .build()
+        );
+    }
 }

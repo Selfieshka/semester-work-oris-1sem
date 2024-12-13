@@ -4,16 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @AllArgsConstructor
 @Getter
 @Builder
-public class Finance {
+public class BankAccount {
     private Long id;
-    private Long owner_id;
-    private String type;
+    private Long ownerId;
+    private String bankName;
     private double amount;
-    private String category;
-    private LocalDate date;
 }

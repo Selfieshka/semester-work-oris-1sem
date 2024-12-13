@@ -1,4 +1,6 @@
 package ru.kpfu.itis.kirillakhmetov.dto;
 
-public record FinanceDto() {
+import java.time.LocalDate;
+
+public record FinanceDto(Long owner_id, double amount, String category, LocalDate date) {
 }

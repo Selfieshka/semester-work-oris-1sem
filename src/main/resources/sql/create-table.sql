@@ -35,39 +35,25 @@ CREATE TABLE employee
 COMMENT ON COLUMN employee.effective_date IS 'Дата вступления в коллектив';
 
 
-CREATE SEQUENCE finance_type_sequence
-    START WITH 100000
-    INCREMENT BY 1
-    CACHE 50;
-
-CREATE TABLE finance_type
-(
-    finance_type_id BIGINT      NOT NULL DEFAULT NEXTVAL('finance_type_sequence'),
-    name            VARCHAR(30) NOT NULL,
-    ------------------------------------
-    CONSTRAINT finance_type_id_pk PRIMARY KEY (finance_type_id),
-    CONSTRAINT finance_type_uq UNIQUE (name)
-);
-
-
-CREATE SEQUENCE profitability_sequence
+CREATE SEQUENCE finance_sequence
     START WITH 100000
     INCREMENT BY 1
     CACHE 50;
 
 CREATE TABLE finance
 (
-    finance_id      BIGINT         NOT NULL DEFAULT NEXTVAL('profitability_sequence'),
-    finance_type_id BIGINT         NOT NULL,
-    value           NUMERIC(12, 2) NOT NULL,
-    date            DATE           NOT NULL,
+    finance_id BIGINT         NOT NULL DEFAULT NEXTVAL('finance_sequence'),
+    owner_id   BIGINT         NOT NULL,
+    type       VARCHAR(30)    NOT NULL,
+    amount     NUMERIC(12, 2) NOT NULL,
+    category   VARCHAR(30)    NOT NULL,
+    date       DATE           NOT NULL,
     ---------------------------------------
     CONSTRAINT finance_id_pk PRIMARY KEY (finance_id),
-    CONSTRAINT finance_type_id_fk FOREIGN KEY (finance_type_id) REFERENCES finance_type (finance_type_id)
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
 );
 
 COMMENT ON TABLE finance IS 'Таблица доходов и расходов';
-COMMENT ON COLUMN finance.value IS 'Величина дохода или расхода';
 
 
 CREATE SEQUENCE owner_sequence
@@ -135,3 +121,22 @@ COMMENT ON COLUMN product.name IS 'Наименование товара';
 COMMENT ON COLUMN product.measurement_unit IS 'Единица измерения товара';
 COMMENT ON COLUMN product.quantity IS 'Количество товара';
 COMMENT ON COLUMN product.unit_price IS 'Цена за единицу товара';
+
+
+CREATE SEQUENCE bank_account_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE bank_account
+(
+    account_id BIGINT         NOT NULL DEFAULT NEXTVAL('bank_account_sequence'),
+    owner_id   BIGINT         NOT NULL,
+    bank_name  VARCHAR(20)    NOT NULL,
+    amount     NUMERIC(12, 2) NOT NULL,
+    ------------------------------
+    CONSTRAINT account_id_pk PRIMARY KEY (account_id),
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id)
+);
+
+COMMENT ON TABLE bank_account IS 'Банковские счета бизнеса'

@@ -1,4 +1,4 @@
-package ru.kpfu.itis.kirillakhmetov.controller;
+package ru.kpfu.itis.kirillakhmetov.controller.finance;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,7 +20,6 @@ public class FinanceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().setAttribute("info", financeService.getInfo());
         getServletContext().getRequestDispatcher("/WEB-INF/view/finance.jsp").forward(req, resp);
     }
 }
