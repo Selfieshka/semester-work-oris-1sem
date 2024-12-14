@@ -35,67 +35,71 @@ cancelButton.addEventListener('click', function () {
     saveButton.classList.add('hidden');
 });
 
-// $(document).ready(function () {
-//     $('#accountForm').on('submit', function (event) {
-//         event.preventDefault(); // Предотвращаем стандартное поведение отправки формы
-//
-//         var formData = $(this).serialize(); // Сериализуем данные формы
-//
-//         $.ajax({
-//             type: 'POST',
-//             url: '/BusinessEfficiency/profile',
-//             data: formData,
-//             success: function (response) {
-//                 // Обработка успешного ответа от сервера
-//                 if (response.redirectUrl) {
-//                     window.location.href = response.redirectUrl; // Выполняем редирект
-//                 }
-//                 console.log('Успешно отправлено:', response);
-//             },
-//             error: function (xhr, status, error) {
-//                 // Обработка ошибки
-//                 console.error('Ошибка при отправке:', error);
-//             }
-//         });
-//     });
-// });
+$(document).ready(function () {
+    $('#accountForm').on('submit', function (event) {
+        event.preventDefault();
+
+        const formData = $(this).serialize();
+
+        $.ajax({
+            type: 'POST',
+            url: '/BusinessEfficiency/profile',
+            data: formData,
+            success: function (response) {
+                const inputs = document.querySelectorAll('.account-edit input');
+
+                inputs.forEach(input => {
+                    input.readOnly = true;
+                });
+
+                inputs.forEach(input => {
+                    input.setAttribute('readonly', true);
+                });
+                editButton.classList.remove('hidden');
+                cancelButton.classList.add('hidden');
+                saveButton.classList.add('hidden');
+                console.log('Успешно отправлено:');
+            },
+            error: function () {
+                console.error('Ошибка при отправке:');
+            }
+        });
+    });
+});
 
 
 $(document).ready(function () {
-    // Обработчик для клика на изображении профиля
     $("#profile-image").click(function () {
-        $("#file-input").click(); // Открываем диалог выбора файла
+        $("#file-input").click();
     });
 
-    // Обработчик для выбора файла
     $("#file-input").change(function (event) {
-        var file = event.target.files[0]; // Получаем выбранный файл
+        const file = event.target.files[0];
         if (file) {
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.onload = function (e) {
-                $("#profile-image").attr("src", e.target.result); // Отображаем загруженное изображение
+                $("#profile-image").attr("src", e.target.result);
                 sendFileToServer(file);
             };
-            reader.readAsDataURL(file); // Читаем файл как Data URL (для предварительного просмотра)
+            reader.readAsDataURL(file);
         }
     });
 
     function sendFileToServer(file) {
         var formData = new FormData();
-        formData.append('profilePhoto', file); // Добавляем файл в объект FormData
+        formData.append('profilePhoto', file);
 
         $.ajax({
             url: '/BusinessEfficiency/profile/upload',
             type: 'POST',
             data: formData,
-            contentType: false, // jQuery сам установит нужные заголовки
-            processData: false, // Не обрабатываем данные
-            success: function (response) {
-                console.log('Изображение успешно загружено:', response);
+            contentType: false,
+            processData: false,
+            success: function () {
+                console.log('Изображение успешно загружено:');
             },
-            error: function (xhr, status, error) {
-                console.error('Ошибка загрузки:', error);
-
+            error: function () {
+                console.error('Ошибка загрузки:');
             }
         });
     }

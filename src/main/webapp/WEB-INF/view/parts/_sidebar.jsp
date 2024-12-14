@@ -16,6 +16,8 @@
                 <img src="${sessionScope.get('owner').profilePhotoUrl()}" alt="profile" class="profile-img"
                      id="profile-image"/>
             </c:if>
+            <input name="profilePhoto" type="file" id="file-input" style="display: none;"
+                   accept="image/x-png, image/jpeg"/>
         </a>
         <span class="user-name">${sessionScope.get('owner').firstName()}</span>
     </header>

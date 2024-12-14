@@ -42,7 +42,6 @@ public class ProfileServlet extends HttpServlet {
         OwnerDto owner = ownerService.getProfileInfo(email).orElseThrow();
         req.getSession().setAttribute("owner", owner);
         resp.sendRedirect(getServletContext().getContextPath() + "/profile");
-//        resp.setContentType("application/json");
-//        resp.getWriter().write("{\"redirectUrl\": \"%s\"}".formatted(getServletContext().getContextPath() + "/profile"));
+        resp.setContentType("application/json");
     }
 }
