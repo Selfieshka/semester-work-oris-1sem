@@ -75,3 +75,12 @@ body {
     bottom: 30px;
     width: 100%;
 }
+
+.sidebar-nav .nav-link.active {
+    background: #333;
+    color: #ffe8a3;
+}
+
+.invoice-container {
+    padding: 16px 16px 16px 300px;
+}

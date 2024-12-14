@@ -1,7 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <link rel="stylesheet" href="<c:url value="/style/_sidebar.css"/>">
 <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+<script defer src="<c:url value="/js/_sidebar.js"/>"></script>
+<body>
 <aside class="sidebar">
     <header class="sidebar-header">
         <a class="header-logo">
@@ -43,13 +46,34 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav-list secondary-nav">
-            <li class="nav-item">
-                <a href="<c:url value="/profile"/>" class="nav-link">
-                    <span class="nav-icon material-symbols-rounded">Account_Circle</span>
-                    <span class="nav-label">Профиль</span>
-                </a>
-            </li>
-        </ul>
+        <c:if test="${not fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
+            <ul class="nav-list secondary-nav">
+                <li class="nav-item">
+                    <a href="<c:url value="/profile"/>" class="nav-link">
+                        <span class="nav-icon material-symbols-rounded">Account_Circle</span>
+                        <span class="nav-label">Профиль</span>
+                    </a>
+                </li>
+            </ul>
+        </c:if>
+        <c:if test="${fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
+            <ul class="nav-list secondary-nav">
+                <li class="nav-item">
+                    <a href="<c:url value="/profile"/>" class="nav-link">
+                        <span class="nav-icon material-symbols-rounded">Logout</span>
+                        <span class="nav-label">Выйти</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="nav-list secondary-nav">
+                <li class="nav-item">
+                    <a href="<c:url value="/profile"/>" class="nav-link">
+                        <span class="nav-icon material-symbols-rounded">Delete</span>
+                        <span class="nav-label">Удалить аккаунт</span>
+                    </a>
+                </li>
+            </ul>
+        </c:if>
     </nav>
 </aside>
+<div class="invoice-container">
