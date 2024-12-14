@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="<c:url value="/style/finance.css"/>">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="<c:url value="/js/finance.js"/>"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -19,21 +20,21 @@
 </header>
 <main>
     <div class="stats">
-        <div class="stat-box">
+        <div class="stat-box" id="profit-box">
             <h2>Прибыль</h2>
-            <p>12 785 259,24 ₽</p>
+            <p></p>
         </div>
         <div class="stat-box" id="revenue-box">
             <h2>Выручка</h2>
-            <p>20 745 000,75 ₽</p>
+            <p></p>
         </div>
         <div class="stat-box" id="expense-box">
             <h2>Расходы</h2>
-            <p>7 959 741,51 ₽</p>
+            <p></p>
         </div>
         <div class="stat-box" id="money-box">
             <h2>Деньги бизнеса</h2>
-            <p>5 854 652 458, 99 ₽</p>
+            <p></p>
         </div>
     </div>
     <div class="modal" id="modal-revenue-container">
@@ -42,7 +43,7 @@
             <form method=POST action="<c:url value="/finance/revenue"/>">
                 <h3>Добавление выручки</h3>
                 <label for="revenue-amount">Сумма</label>
-                <input type="number" id="revenue-amount" name="amount" required/>
+                <input type="number" step="any" id="revenue-amount" name="amount" required/>
                 <label for="revenue-date">Дата, за которую вносится выручка:</label>
                 <input type="date" id="revenue-date" name="date" required/>
 
@@ -56,7 +57,7 @@
             <form method=POST action="<c:url value="/finance/expense"/>">
                 <h3>Добавление расхода</h3>
                 <label for="expense-amount">Сумма</label>
-                <input type="number" id="expense-amount" name="amount" required/>
+                <input type="number" step="any" id="expense-amount" name="amount" required/>
                 <label for="expense-category">Категория</label>
                 <input type="text" id="expense-category" name="category" required/>
                 <label for="expense-date">Дата, за которую вносится расход:</label>
@@ -74,7 +75,7 @@
                 <label for="money-bank">Банк</label>
                 <input type="text" id="money-bank" name="bankName" required/>
                 <label for="money-amount">Сумма</label>
-                <input type="number" id="money-amount" name="amount" required/>
+                <input type="number" step="any" id="money-amount" name="amount" required/>
 
                 <button type="submit">Добавить</button>
             </form>

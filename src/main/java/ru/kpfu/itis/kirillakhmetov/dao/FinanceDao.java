@@ -26,6 +26,21 @@ public class FinanceDao extends BaseDao<Finance> {
             ORDER BY date
             """;
 
+    //language=sql
+    private static final String SQL_SUM_ALL_REVENUE = """
+            SELECT SUM(amount) AS amount
+            FROM finance
+            WHERE owner_id = ? AND category = 'Выручка'
+            """;
+
+    //language=sql
+    private static final String SQL_SUM_ALL_EXPENSE = """
+            SELECT SUM(amount) AS amount
+            FROM finance
+            WHERE owner_id = ? AND type = 'Расход'
+            """;
+
+
     public FinanceDao() {
         this.mapper = new FinanceMapper();
     }
@@ -85,6 +100,30 @@ public class FinanceDao extends BaseDao<Finance> {
                 ));
             }
             return result;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public double sumAllRevenue(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SUM_ALL_REVENUE)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("amount");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public double sumAllExpense(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SUM_ALL_EXPENSE)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("amount");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

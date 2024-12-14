@@ -6,6 +6,7 @@ import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +17,14 @@ public class BankAccountDao extends BaseDao<BankAccount> {
             INSERT INTO bank_account(owner_id, bank_name, amount)
             VALUES (?, ?, ?)
             """;
+
+    //language=sql
+    private static final String SQL_SUM_ALL_AMOUNT = """
+            SELECT SUM(amount) AS amount
+            FROM bank_account
+            WHERE owner_id = ?
+            """;
+
 
     public BankAccountDao() {
         this.mapper = new BankAccountMapper();
@@ -47,5 +56,17 @@ public class BankAccountDao extends BaseDao<BankAccount> {
     @Override
     public boolean deleteById(Long id) {
         return false;
+    }
+
+    public double sumAllAmount(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_SUM_ALL_AMOUNT)) {
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            return resultSet.getDouble("amount");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -3,6 +3,7 @@ package ru.kpfu.itis.kirillakhmetov.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.kpfu.itis.kirillakhmetov.dao.FinanceDao;
+import ru.kpfu.itis.kirillakhmetov.dto.ApiFinanceDto;
 import ru.kpfu.itis.kirillakhmetov.dto.FinanceDto;
 import ru.kpfu.itis.kirillakhmetov.dto.PointGraphDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Finance;
@@ -57,5 +58,38 @@ public class FinanceService {
                 .date(financeDto.date())
                 .build()
         );
+    }
+
+    public String calculateRevenue(Long id) {
+        double sumRevenue = financeDao.sumAllRevenue(id);
+        String jsonObject;
+        try {
+            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(sumRevenue));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Ошибка перевода данных в json");
+        }
+        return jsonObject;
+    }
+
+    public String calculateExpense(Long id) {
+        double sumExpense = financeDao.sumAllExpense(id);
+        String jsonObject;
+        try {
+            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(sumExpense));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Ошибка перевода данных в json");
+        }
+        return jsonObject;
+    }
+
+    public String calculateProfit(Long idOwner) {
+        double profit = financeDao.sumAllRevenue(idOwner) - financeDao.sumAllExpense(idOwner);
+        String jsonObject;
+        try {
+            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(profit));
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Ошибка перевода данных в json");
+        }
+        return jsonObject;
     }
 }

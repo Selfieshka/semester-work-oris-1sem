@@ -117,3 +117,37 @@ window.onclick = function (event) {
         modalExpense.style.display = "none";
     }
 }
+
+$(document).ready(function () {
+    const requests = [
+        {url: '/BusinessEfficiency/api/v1/stats/expense', selector: '#expense-box p', defaultMessage: 'Загрузка...'},
+        {url: '/BusinessEfficiency/api/v1/stats/revenue', selector: '#revenue-box p', defaultMessage: 'Загрузка...'},
+        {url: '/BusinessEfficiency/api/v1/stats/money', selector: '#money-box p', defaultMessage: 'Загрузка...'},
+        {url: '/BusinessEfficiency/api/v1/stats/profit', selector: '#profit-box p', defaultMessage: 'Загрузка...'},
+    ];
+
+    function fetchData(url, selector, defaultMessage) {
+        $(selector).text(defaultMessage);
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                const formattedValue = (data.value).toLocaleString('ru-RU', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                $(selector).text(formattedValue + ' ₽');
+            },
+            error: function (xhr, status, error) {
+                console.error("AJAX Error:", status, error);
+                $(selector).text('Ошибка загрузки данных');
+            }
+        });
+    }
+
+    requests.forEach(request => {
+        fetchData(request.url, request.selector, request.defaultMessage);
+    });
+});
