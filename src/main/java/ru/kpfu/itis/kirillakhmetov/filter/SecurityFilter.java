@@ -12,8 +12,9 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class SecurityFilter extends HttpFilter {
-    private static final String[] SECURITY_PATHS = {"/login", "/registration",
-            "/style/login.css", "/style/registration.css"};
+    private static final String[] UNPROTECTED_PATHS = {"/login", "/registration",
+            "/style/login.css", "/style/registration.css",
+            "/img/login.svg", "/img/registration.svg"};
     private SecurityService securityService;
 
     @Override
@@ -24,7 +25,7 @@ public class SecurityFilter extends HttpFilter {
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
         boolean matchPaths = false;
-        for (String path : SECURITY_PATHS) {
+        for (String path : UNPROTECTED_PATHS) {
             if (path.equals(req.getRequestURI().substring(getServletContext().getContextPath().length()))) {
                 matchPaths = true;
                 break;
