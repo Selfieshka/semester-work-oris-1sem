@@ -76,4 +76,4 @@
         </c:if>
     </nav>
 </aside>
-<div class="invoice-container">
+<div class="container">
