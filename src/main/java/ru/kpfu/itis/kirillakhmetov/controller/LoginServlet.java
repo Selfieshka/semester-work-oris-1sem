@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                 req.getSession().setAttribute("id", ownerService.getOwnerIdByEmail(email));
                 req.getSession().setAttribute("owner", owner);
             }
-            resp.sendRedirect(getServletContext().getContextPath());
+            resp.sendRedirect(getServletContext().getContextPath() + "/main");
         } else {
             getServletContext().getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
         }

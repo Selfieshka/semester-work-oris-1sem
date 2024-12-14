@@ -22,7 +22,7 @@
     <nav class="sidebar-nav">
         <ul class="nav-list primary-nav">
             <li class="nav-item">
-                <a href="<c:url value="/"/>" class="nav-link">
+                <a href="<c:url value="/main"/>" class="nav-link">
                     <span class="nav-icon material-symbols-rounded">Home</span>
                     <span class="nav-label">Главная</span>
                 </a>
@@ -46,16 +46,6 @@
                 </a>
             </li>
         </ul>
-        <c:if test="${not fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
-            <ul class="nav-list secondary-nav">
-                <li class="nav-item">
-                    <a href="<c:url value="/profile"/>" class="nav-link">
-                        <span class="nav-icon material-symbols-rounded">Account_Circle</span>
-                        <span class="nav-label">Профиль</span>
-                    </a>
-                </li>
-            </ul>
-        </c:if>
         <c:if test="${fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
             <ul class="nav-list secondary-nav">
                 <li class="nav-item">
@@ -74,6 +64,14 @@
                 </li>
             </ul>
         </c:if>
+        <ul class="nav-list secondary-nav">
+            <li class="nav-item">
+                <a href="<c:url value="/profile"/>" class="nav-link">
+                    <span class="nav-icon material-symbols-rounded">Account_Circle</span>
+                    <span class="nav-label">Профиль</span>
+                </a>
+            </li>
+        </ul>
     </nav>
 </aside>
 <div class="container">
