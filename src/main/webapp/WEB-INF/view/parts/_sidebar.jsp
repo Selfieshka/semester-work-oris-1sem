@@ -46,31 +46,29 @@
                 </a>
             </li>
         </ul>
-        <c:if test="${fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
-            <ul class="nav-list secondary-nav">
+        <ul class="nav-list secondary-nav">
+            <c:if test="${not fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
                 <li class="nav-item">
                     <a href="<c:url value="/profile"/>" class="nav-link">
+                        <span class="nav-icon material-symbols-rounded">Account_Circle</span>
+                        <span class="nav-label">Профиль</span>
+                    </a>
+                </li>
+            </c:if>
+            <c:if test="${fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
+                <li class="nav-item">
+                    <a href="<c:url value="/profile"/>" class="nav-link logout">
                         <span class="nav-icon material-symbols-rounded">Logout</span>
                         <span class="nav-label">Выйти</span>
                     </a>
                 </li>
-            </ul>
-            <ul class="nav-list secondary-nav">
                 <li class="nav-item">
-                    <a href="<c:url value="/profile"/>" class="nav-link">
+                    <a href="<c:url value="/profile"/>" class="nav-link delete">
                         <span class="nav-icon material-symbols-rounded">Delete</span>
                         <span class="nav-label">Удалить аккаунт</span>
                     </a>
                 </li>
-            </ul>
-        </c:if>
-        <ul class="nav-list secondary-nav">
-            <li class="nav-item">
-                <a href="<c:url value="/profile"/>" class="nav-link">
-                    <span class="nav-icon material-symbols-rounded">Account_Circle</span>
-                    <span class="nav-label">Профиль</span>
-                </a>
-            </li>
+            </c:if>
         </ul>
     </nav>
 </aside>

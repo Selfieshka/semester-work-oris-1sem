@@ -1,90 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
-body {
-    background-color: #f8fafc;
-}
-
-.invoice-container {
-    display: flex;
-    margin: 50px 10px;
-}
-
-.profile {
-    flex: 1;
-    margin-right: 10px;
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    border-radius: 5px;
-    height: max-content;
-}
-
-.profile-header {
-    display: flex;
-    margin-left: 15px;
-}
-
-.profile-img {
-    width: 60px;
-    height: 60px;
-    border-radius: 10px;
-    margin: 10px;
-}
-
-.profile-text-container {
-    line-height: 0.5;
-}
-
-.profile-title {
-    font-family: "Manrope Medium", sans-serif;
-    font-size: 20px;
-}
-
-.profile-email {
-    font-family: "Manrope Medium", sans-serif;
-    font-size: 14px;
-}
-
-.menu {
-    margin: 0 20px;
-}
-
-.menu-link {
-    display: block;
-    text-decoration: none;
-    color: #768499;
-    font-family: "Manrope Medium", sans-serif;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 10px;
-}
-
-.menu-link.logout {
-    color: #f52020;
-}
-
-.menu-link.delete {
-    color: #f52020;
-}
-
-.menu-icon {
-    margin-right: 10px;
-}
-
-.menu-link:first-child {
-    color: #fff;
-    background-color: #536dfe;
-}
-
-.menu-link:hover {
-    background-color: #f1f5f9;
-    color: #1e293b;
-}
-
-.menu-link:first-child:hover {
-    background-color: #536dfe;
-    color: #fff;
-}
-
 form button {
     background: none;
     border: none;
@@ -98,7 +13,7 @@ form button {
     flex: 2;
     margin-left: 10px;
     background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
     border-radius: 5px;
     height: max-content;
 }
@@ -117,10 +32,6 @@ form button {
     color: #1e293b;
     font-weight: 500;
     margin-left: 10px;
-}
-
-.profile-email {
-    margin-top: 22px;
 }
 
 .btn-container {
