@@ -1,0 +1,21 @@
+.invoice-container {
+
+}
+
+.main-content {
+    margin-top: 16px;
+    margin-left: 290px;
+}
+
+table {
+    border: 2px;
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 6px;
+}
+
+.add-employee {
+    text-decoration: none;
+}

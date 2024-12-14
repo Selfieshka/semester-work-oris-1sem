@@ -4,32 +4,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Business Efficiency</title>
+    <title>Сотрудники</title>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/style/staff.css"/>">
 </head>
-<body>
-<table border="1" cellpadding="5">
-    <caption><h2>Список сотрудников</h2></caption>
-    <tr>
-        <th>Имя</th>
-        <th>Фамилия</th>
-        <th>Отчество</th>
-        <th>Дата вступления в коллектив</th>
-        <th>Должность</th>
-        <th>Зарплата</th>
-    </tr>
-    <c:forEach items="${staff}" var="employee">
+
+<%@include file="/WEB-INF/view/parts/_sidebar.jsp" %>
+
+<div class="main-content">
+    <table>
+        <caption><h2>Список сотрудников</h2></caption>
         <tr>
-            <td><c:out value="${employee.getFirstName()}"/></td>
-            <td><c:out value="${employee.getLastName()}"/></td>
-            <td><c:out value="${employee.getPatronymic()}"/></td>
-            <td><c:out value="${employee.getEffectiveDate()}"/></td>
-            <td><c:out value="${employee.getPosition()}"/></td>
-            <td><c:out value="${employee.getSalary()}"/></td>
+            <th>Имя</th>
+            <th>Фамилия</th>
+            <th>Отчество</th>
+            <th>Дата вступления в коллектив</th>
+            <th>Должность</th>
+            <th>Зарплата</th>
         </tr>
-    </c:forEach>
-</table border="1" cellpadding="5">
-<a href="<c:url value="/staff/add"/>" style="text-decoration:none;">
-    <button>Добавить сотрудника</button>
-</a>
-</body>
-</html>
+        <c:forEach items="${staff}" var="employee">
+            <tr>
+                <td><c:out value="${employee.getFirstName()}"/></td>
+                <td><c:out value="${employee.getLastName()}"/></td>
+                <td><c:out value="${employee.getPatronymic()}"/></td>
+                <td><c:out value="${employee.getEffectiveDate()}"/></td>
+                <td><c:out value="${employee.getPosition()}"/></td>
+                <td><c:out value="${employee.getSalary()}"/></td>
+            </tr>
+        </c:forEach>
+    </table border="1" cellpadding="5"
+    <a class="add-employee" href="<c:url value="/staff/add"/>">
+        <button>Добавить сотрудника</button>
+    </a>
+</div>
+
+<%@include file="/WEB-INF/view/parts/_footer.jsp" %>

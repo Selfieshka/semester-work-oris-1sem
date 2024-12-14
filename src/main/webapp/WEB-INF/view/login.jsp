@@ -6,7 +6,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Вход в аккаунт</title>
+    <title>Вход</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/style/login.css"/>">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>

@@ -8,10 +8,12 @@
     <link rel="stylesheet" href="<c:url value="/style/invoices.css"/>">
     <script defer src="<c:url value="/js/invoices.js"/>"></script>
 </head>
-<body>
+
+<%@include file="/WEB-INF/view/parts/_sidebar.jsp" %>
+
 <button id="openModal">Создать накладную</button>
 
-<div id="myModal" class="modal">
+<div id="myModal" class="modal-container">
     <div class="modal-content">
         <span class="close">&times;</span>
         <form method="POST" enctype="multipart/form-data">
@@ -40,7 +42,7 @@
     <th>Номер накладной</th>
     <th>Дата</th>
 </tr>
-<div class="container">
+<div class="invoice-container">
     <h1>Накладные</h1>
     <c:forEach items="${requestScope.get('invoices')}" var="invoice">
         <div class="invoice-row">
@@ -49,5 +51,5 @@
         </div>
     </c:forEach>
 </div>
-</body>
-</html>
+
+<%@include file="/WEB-INF/view/parts/_footer.jsp" %>
