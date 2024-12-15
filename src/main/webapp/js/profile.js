@@ -18,6 +18,8 @@ editButton.addEventListener('click', function () {
         input.removeAttribute('readonly');
     });
 
+    document.getElementById('email').readOnly = true;
+
     editButton.classList.add('hidden');
     cancelButton.classList.remove('hidden');
     saveButton.classList.remove('hidden');

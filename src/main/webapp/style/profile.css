@@ -1,142 +1,126 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
 
-form button {
-    background: none;
-    border: none;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
 .account {
-    flex: 2;
-    margin-left: 10px;
-    background-color: #fff;
-    box-shadow: rgba(0, 0, 0, 0.16) 0 1px 4px;
-    border-radius: 5px;
-    height: max-content;
+    width: 80%;
+    max-width: 700px;
+    margin: 20px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0 6px 20px;
 }
 
 .account-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #768499;
+    padding: 10px 0;
+    border-bottom: 2px solid #333;
 }
 
 .account-title {
-    font-family: "Manrope Medium", sans-serif;
-    font-size: 20px;
-    color: #1e293b;
-    font-weight: 500;
-    margin-left: 10px;
+    font-size: 28px;
+    color: #a8a8a8;
+    font-weight: 700;
 }
 
 .btn-container {
-    margin-right: 5px;
+    margin-left: auto;
+}
+
+.btn-cancel, .btn-save, .btn-edit {
+    border: none;
+    border-radius: 25px;
+    color: white;
+    font-weight: 600;
+    padding: 15px 25px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .btn-cancel {
-    width: 8em;
-    height: 3em;
-    cursor: pointer;
-    border: 1px solid #768499;
-    border-radius: 2em;
-    color: #1e293b;
-    font-weight: bold;
-    margin-right: 5px;
-    background-color: #fff;
-    transition-duration: 0.3s;
-    box-shadow: rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    border: 2px solid #FF6B6B;
+    color: #FF6B6B;
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
 }
 
 .btn-cancel:hover {
-    background-color: #f1f5f9;
+    background-color: #FF6B6B;
+    color: white;
+    transform: translateY(-2px);
 }
 
 .btn-save {
-    width: 8em;
-    height: 3em;
-    cursor: pointer;
-    border: 1px solid #458ff6;
-    border-radius: 2em;
-    color: #fff;
-    font-weight: bold;
-    margin-left: 5px;
-    background-color: #536dfe;
-    transition-duration: 0.3s;
-    box-shadow: rgba(0, 0, 0, 0.1);
+    background-color: transparent;
+    border: 2px solid #4CAF50;
+    color: #4CAF50;
+    transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
 }
 
 .btn-save:hover {
-    background-color: #4053c9;
+    background-color: #388E3C;
+    color: white;
+    transform: translateY(-2px);
 }
 
 .btn-edit {
-    width: 8em;
-    height: 3em;
-    cursor: pointer;
-    border: 1px solid #458ff6;
-    border-radius: 2em;
-    color: #1e293b;
-    font-weight: bold;
-    margin-right: 5px;
-    background-color: #fff;
-    transition-duration: 0.3s;
-    box-shadow: rgba(0, 0, 0, 0.1);
+    background-color: #333;
+}
+
+.btn-edit:hover {
+    background-color: #333;
+    transform: translateY(-2px);
 }
 
 .account-edit {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    margin: 15px 0;
+    margin: 20px 0;
 }
 
 .input-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin: 0 20px;
+    width: calc(50% - 15px);
+    margin-bottom: 25px;
 }
 
 .input-container label {
-    font-family: "Manrope Medium", sans-serif;
-    color: #768499;
-    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
 }
 
-.input-container input {
-    height: 25px;
-    border: 1.5px solid #768499;
-    border-radius: 5px;
-    padding: 5px;
-    color: #768499;
-    font-family: "Manrope Medium", sans-serif;
-}
-
-.input-container input:focus {
-    outline: none;
-    border: 1.5px solid #536dfe;
-}
-
+.input-container input,
 .input-container textarea {
-    display: flex;
     width: 100%;
-    height: 100px;
-    padding: 5px;
-    border: 1.5px solid #768499;
-    border-radius: 5px;
-    font-family: "Manrope Medium", sans-serif;
-    color: #768499;
+    padding: 12px;
+    border: 1.5px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+    transition: border-color 0.3s;
+    background-color: #f9f9f9;
 }
 
+.input-container input:focus,
 .input-container textarea:focus {
+    border-color: #333;
     outline: none;
-    border: 1.5px solid #536dfe;
+}
+
+.input-container input[readonly]:focus,
+.input-container textarea[readonly]:focus {
+    border-color: #ccc;
+    outline: none;
 }
 
 .hidden {
     display: none !important;
+}
+
+@media (max-width: 600px) {
+    .input-container {
+        width: 100%;
+    }
 }
