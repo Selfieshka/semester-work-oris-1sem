@@ -40,22 +40,6 @@ CREATE SEQUENCE finance_sequence
     INCREMENT BY 1
     CACHE 50;
 
-CREATE TABLE finance
-(
-    finance_id BIGINT         NOT NULL DEFAULT NEXTVAL('finance_sequence'),
-    owner_id   BIGINT         NOT NULL,
-    type       VARCHAR(30)    NOT NULL,
-    amount     NUMERIC(12, 2) NOT NULL,
-    category   VARCHAR(30)    NOT NULL,
-    date       DATE           NOT NULL,
-    ---------------------------------------
-    CONSTRAINT finance_id_pk PRIMARY KEY (finance_id),
-    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
-);
-
-COMMENT ON TABLE finance IS 'Таблица доходов и расходов';
-
-
 CREATE SEQUENCE owner_sequence
     START WITH 100000
     INCREMENT BY 1
@@ -77,6 +61,22 @@ CREATE TABLE owner
     CONSTRAINT owner_id_pk PRIMARY KEY (owner_id),
     CONSTRAINT owner_email_uq UNIQUE (email)
 );
+
+
+CREATE TABLE finance
+(
+    finance_id BIGINT         NOT NULL DEFAULT NEXTVAL('finance_sequence'),
+    owner_id   BIGINT         NOT NULL,
+    type       VARCHAR(30)    NOT NULL,
+    amount     NUMERIC(12, 2) NOT NULL,
+    category   VARCHAR(30)    NOT NULL,
+    date       DATE           NOT NULL,
+    ---------------------------------------
+    CONSTRAINT finance_id_pk PRIMARY KEY (finance_id),
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
+);
+
+COMMENT ON TABLE finance IS 'Таблица доходов и расходов';
 
 
 CREATE SEQUENCE invoice_sequence
