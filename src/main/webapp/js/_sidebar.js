@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('.nav-link');
 
     navLinks.forEach(link => {
-        const href = link.getAttribute('href'); // Получаем значение href ссылки
+        const href = link.getAttribute('href');
         if (currentPath.endsWith(href)
             && !link.classList.contains("logout")
             && !link.classList.contains("delete")) {

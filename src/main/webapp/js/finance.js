@@ -1,3 +1,7 @@
+const currentPath = window.location.pathname;
+const pathParts = currentPath.split('/');
+const basePath = '/' + pathParts[1];
+
 const ctxLine = document.getElementById('lineChart').getContext('2d');
 const ctxBar = document.getElementById('barChart').getContext('2d');
 
@@ -120,10 +124,10 @@ window.onclick = function (event) {
 
 $(document).ready(function () {
     const requests = [
-        {url: '/BusinessEfficiency/api/v1/stats/expense', selector: '#expense-box p', defaultMessage: 'Загрузка...'},
-        {url: '/BusinessEfficiency/api/v1/stats/revenue', selector: '#revenue-box p', defaultMessage: 'Загрузка...'},
-        {url: '/BusinessEfficiency/api/v1/stats/money', selector: '#money-box p', defaultMessage: 'Загрузка...'},
-        {url: '/BusinessEfficiency/api/v1/stats/profit', selector: '#profit-box p', defaultMessage: 'Загрузка...'},
+        {url: basePath + '/api/v1/stats/expense', selector: '#expense-box p', defaultMessage: 'Загрузка...'},
+        {url: basePath + '/api/v1/stats/revenue', selector: '#revenue-box p', defaultMessage: 'Загрузка...'},
+        {url: basePath + '/api/v1/stats/money', selector: '#money-box p', defaultMessage: 'Загрузка...'},
+        {url: basePath + '/api/v1/stats/profit', selector: '#profit-box p', defaultMessage: 'Загрузка...'},
     ];
 
     function fetchData(url, selector, defaultMessage) {
