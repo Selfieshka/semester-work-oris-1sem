@@ -15,18 +15,18 @@ public final class CloudinaryUtil {
     private static final String CLOUD_NAME = "cloud_name";
     private static final String API_KEY = "api_key";
     private static final String API_SECRET = "api_secret";
-    private static final String MY_CLOUD_NAME = "cloudinary.cloud.name";
-    private static final String MY_API_KEY = "cloudinary.api.key";
-    private static final String MY_API_SECRET = "cloudinary.api.secret";
+    private static final String MY_CLOUD_NAME = System.getenv("CLOUDINARY_API_KEY");
+    private static final String MY_API_KEY = System.getenv("CLOUDINARY_API_KEY");
+    private static final String MY_API_SECRET = System.getenv("CLOUDINARY_API_SECRET");
     private static final String UPLOAD_DIRECTORY = "uploads";
     private static final int DIRECTORIES_COUNT = 10;
 
     private static Cloudinary getInstance() {
         if (cloudinary == null) {
             cloudinary = new Cloudinary(ObjectUtils.asMap(
-                    CLOUD_NAME, ConfigReader.getValue(MY_CLOUD_NAME),
-                    API_KEY, ConfigReader.getValue(MY_API_KEY),
-                    API_SECRET, ConfigReader.getValue(MY_API_SECRET)
+                    CLOUD_NAME, MY_CLOUD_NAME,
+                    API_KEY, MY_API_KEY,
+                    API_SECRET, MY_API_SECRET
             ));
         }
         return cloudinary;
