@@ -1,3 +1,6 @@
+/*
+* Подсветка текущей вкладки
+* */
 document.addEventListener('DOMContentLoaded', () => {
     const currentPath = window.location.pathname;
 
@@ -11,4 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.add('active');
         }
     });
+});
+
+document.getElementById('logoutForm').addEventListener('click', function (event) {
+    document.getElementById('logoutButton').click();
+});
+
+document.getElementById('deleteForm').addEventListener('click', function (event) {
+    document.getElementById('deleteButton').click();
 });

@@ -58,17 +58,23 @@
                 </li>
             </c:if>
             <c:if test="${fn:endsWith(pageContext.request.requestURI, '/profile.jsp')}">
-                <li class="nav-item">
-                    <a href="<c:url value="/profile"/>" class="nav-link logout">
+                <li class="nav-item" id="logoutForm">
+                    <form method="POST" action="<c:url value="/profile/logout"/>" style="cursor: pointer"
+                          class="nav-link logout">
+                        <button type="submit" class="nav-link logout" style="display:none;"
+                                id="logoutButton"></button>
                         <span class="nav-icon material-symbols-rounded">Logout</span>
                         <span class="nav-label">Выйти</span>
-                    </a>
+                    </form>
                 </li>
-                <li class="nav-item">
-                    <a href="<c:url value="/profile"/>" class="nav-link delete">
+                <li class="nav-item" id="deleteForm">
+                    <form method="POST" action="<c:url value="/profile/delete"/>" style="cursor: pointer"
+                          class="nav-link delete">
+                        <button type="submit" class="nav-link delete" id="deleteButton"
+                                style="display:none"></button>
                         <span class="nav-icon material-symbols-rounded">Delete</span>
                         <span class="nav-label">Удалить аккаунт</span>
-                    </a>
+                    </form>
                 </li>
             </c:if>
         </ul>
