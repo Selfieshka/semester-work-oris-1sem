@@ -32,6 +32,14 @@
             <p>Уже зарегистрировались? <a class="login" href="${pageContext.request.contextPath}/login">Войти</a></p>
         </div>
     </form>
+    <c:if test="${not empty requestScope.errors}">
+        <div class="errors-box">
+            <c:forEach var="error" items="${requestScope.errors}">
+                <span>${error.message()}</span>
+                <br>
+            </c:forEach>
+        </div>
+    </c:if>
 </div>
 </body>
 

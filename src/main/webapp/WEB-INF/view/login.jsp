@@ -36,13 +36,6 @@
             <a class="registration" href="${pageContext.request.contextPath}/registration">Регистрация</a>
         </p>
     </div>
-    <c:if test="${param.login eq 'error'}">
-        <div class="message-box-error">
-                <span>
-                        Неверный email или пароль
-                </span>
-        </div>
-    </c:if>
     <c:if test="${not empty param.registered}">
         <div class="message-box-success">
                 <span>
@@ -55,6 +48,14 @@
                 <span>
                     Вы вышли из аккаунта
                 </span>
+        </div>
+    </c:if>
+    <c:if test="${not empty requestScope.errors}">
+        <div class="errors-box">
+            <c:forEach var="error" items="${requestScope.errors}">
+                <span>${error.message()}</span>
+                <br>
+            </c:forEach>
         </div>
     </c:if>
 </div>
