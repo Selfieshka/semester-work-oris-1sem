@@ -3,11 +3,11 @@ package ru.kpfu.itis.kirillakhmetov.validator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
+import ru.kpfu.itis.kirillakhmetov.util.annotations.Singleton;
 
+@Singleton
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SignUpOwnerValidator implements Validator<SignUpOwnerDto> {
-    private static final SignUpOwnerValidator _INSTANCE = new SignUpOwnerValidator();
-
     @Override
     public ValidationResult isValid(SignUpOwnerDto signUpOwnerDto) {
         ValidationResult validationResult = new ValidationResult();
@@ -24,9 +24,5 @@ public class SignUpOwnerValidator implements Validator<SignUpOwnerDto> {
             validationResult.add(new Error("invalid.password", "Поле \"Пароль\" не может быть пустым"));
         }
         return validationResult;
-    }
-
-    public static SignUpOwnerValidator getInstance() {
-        return _INSTANCE;
     }
 }

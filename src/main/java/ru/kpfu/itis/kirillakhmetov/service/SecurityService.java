@@ -7,6 +7,7 @@ import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Owner;
 import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.util.PasswordHashingUtil;
+import ru.kpfu.itis.kirillakhmetov.util.annotations.SingletonFactory;
 import ru.kpfu.itis.kirillakhmetov.validator.Error;
 import ru.kpfu.itis.kirillakhmetov.validator.SignInOwnerValidator;
 import ru.kpfu.itis.kirillakhmetov.validator.SignUpOwnerValidator;
@@ -16,8 +17,8 @@ import java.util.Optional;
 
 public class SecurityService {
     private final OwnerDao ownerDao;
-    private final SignUpOwnerValidator signUpOwnerValidator = SignUpOwnerValidator.getInstance();
-    private final SignInOwnerValidator signInOwnerValidator = SignInOwnerValidator.getInstance();
+    private final SignUpOwnerValidator signUpOwnerValidator = SingletonFactory.getInstance(SignUpOwnerValidator.class);
+    private final SignInOwnerValidator signInOwnerValidator = SingletonFactory.getInstance(SignInOwnerValidator.class);
 
     public SecurityService(OwnerDao ownerDao) {
         this.ownerDao = ownerDao;
