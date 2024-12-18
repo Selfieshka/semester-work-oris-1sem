@@ -1,3 +1,26 @@
+CREATE SEQUENCE owner_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE owner
+(
+    owner_id          BIGINT       NOT NULL DEFAULT NEXTVAL('owner_sequence'),
+    first_name        VARCHAR(30)  NOT NULL,
+    last_name         VARCHAR(30),
+    patronymic        VARCHAR(30),
+    age               INTEGER,
+    email             VARCHAR(255) NOT NULL,
+    phone_number      VARCHAR(30),
+    password          TEXT         NOT NULL,
+    business_name     VARCHAR(30)  NOT NULL,
+    profile_photo_url VARCHAR(255),
+    ------------------------------
+    CONSTRAINT owner_id_pk PRIMARY KEY (owner_id),
+    CONSTRAINT owner_email_uq UNIQUE (email)
+);
+
+
 CREATE SEQUENCE position_sequence
     START WITH 100000
     INCREMENT BY 1
@@ -21,24 +44,36 @@ CREATE SEQUENCE employee_sequence
 CREATE TABLE employee
 (
     employee_id    BIGINT      NOT NULL DEFAULT NEXTVAL('employee_sequence'),
+    owner_id       BIGINT      NOT NULL,
     first_name     VARCHAR(30) NOT NULL,
     last_name      VARCHAR(30) NOT NULL,
     patronymic     VARCHAR(30),
     effective_date DATE        NOT NULL,
-    position_id    INTEGER     NOT NULL,
     salary         INTEGER     NOT NULL,
     -----------------------------------
     CONSTRAINT employee_id_pk PRIMARY KEY (employee_id),
-    CONSTRAINT position_id_fk FOREIGN KEY (position_id) REFERENCES position (position_id) ON DELETE CASCADE
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id)
 );
 
 COMMENT ON COLUMN employee.effective_date IS 'Дата вступления в коллектив';
+
+
+CREATE TABLE employee_position
+(
+    employee_id BIGINT NOT NULL,
+    position_id BIGINT NOT NULL,
+    ---------------------------
+    CONSTRAINT employee_position_id_pk PRIMARY KEY (employee_id, position_id),
+    CONSTRAINT employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee ON DELETE CASCADE,
+    CONSTRAINT position_id_fk FOREIGN KEY (position_id) REFERENCES position ON DELETE CASCADE
+);
 
 
 CREATE SEQUENCE finance_sequence
     START WITH 100000
     INCREMENT BY 1
     CACHE 50;
+
 
 CREATE TABLE finance
 (
@@ -53,30 +88,8 @@ CREATE TABLE finance
     CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
 );
 
+
 COMMENT ON TABLE finance IS 'Таблица доходов и расходов';
-
-
-CREATE SEQUENCE owner_sequence
-    START WITH 100000
-    INCREMENT BY 1
-    CACHE 50;
-
-CREATE TABLE owner
-(
-    owner_id          BIGINT       NOT NULL DEFAULT NEXTVAL('owner_sequence'),
-    first_name        VARCHAR(30)  NOT NULL,
-    last_name         VARCHAR(30),
-    patronymic        VARCHAR(30),
-    age               INTEGER,
-    email             VARCHAR(255) NOT NULL,
-    phone_number      VARCHAR(30),
-    password          TEXT         NOT NULL,
-    business_name     VARCHAR(30)  NOT NULL,
-    profile_photo_url VARCHAR(255),
-    ------------------------------
-    CONSTRAINT owner_id_pk PRIMARY KEY (owner_id),
-    CONSTRAINT owner_email_uq UNIQUE (email)
-);
 
 
 CREATE SEQUENCE invoice_sequence
@@ -139,4 +152,4 @@ CREATE TABLE bank_account
     CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id)
 );
 
-COMMENT ON TABLE bank_account IS 'Банковские счета бизнеса'
+COMMENT ON TABLE bank_account IS 'Банковские счета бизнеса';
