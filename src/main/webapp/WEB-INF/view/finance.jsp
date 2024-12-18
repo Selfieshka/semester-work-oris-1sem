@@ -57,12 +57,25 @@
 <div class="modal" id="modal-expense-container">
     <div class="modal-content" id="modal-expense-content">
         <span class="nav-icon material-symbols-rounded close" id="close-expense">Close</span>
-        <form method=POST action="<c:url value="/finance/expense"/>">
+        <form method="POST" action="<c:url value='/finance/expense'/>">
             <h3>Добавление расхода</h3>
             <label for="expense-category">Категория</label>
-            <input type="text" id="expense-category" maxlength="30" name="category" required/>
+            <div class="dropdown">
+                <input type="text" id="expense-category" name="category" placeholder="Выберите категорию" readonly required onclick="toggleDropdown()">
+                <div class="dropdown-content" id="category-dropdown">
+                    <div class="category-item" onclick="selectCategory('Закупки товаров')">Закупки товаров</div>
+                    <div class="category-item" onclick="selectCategory('Аренда')">Аренда</div>
+                    <div class="category-item" onclick="selectCategory('Реклама')">Реклама</div>
+                    <div class="category-item" onclick="selectCategory('Налоги и взносы')">Налоги и взносы</div>
+                    <div class="category-item" onclick="selectCategory('Зарплаты и премии')">Зарплаты и премии</div>
+                    <div class="category-item" onclick="selectCategory('Аутсорсинг')">Аутсорсинг</div>
+                    <div class="category-item" onclick="selectCategory('Другое')">Другое</div>
+                </div>
+            </div>
+
             <label for="expense-amount">Сумма</label>
             <input type="number" step="any" min="1" max="9999999999" id="expense-amount" name="amount" required/>
+
             <label for="expense-date">Дата, за которую вносится расход:</label>
             <input type="date" id="expense-date" name="date" min="2000-01-01" max="9999-12-31" required/>
 

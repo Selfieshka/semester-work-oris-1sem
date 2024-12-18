@@ -472,3 +472,20 @@ $(document).ready(function () {
     fetchTotalPages();
     fetchData(currentPage);
 });
+
+
+function toggleDropdown() {
+    document.getElementById('category-dropdown').style.display = 'block';
+}
+
+function selectCategory(category) {
+    document.getElementById('expense-category').value = category;
+    document.getElementById('category-dropdown').style.display = 'none';
+}
+
+document.addEventListener('click', (event) => {
+    const dropdown = document.querySelector('.dropdown');
+    if (!dropdown.contains(event.target)) {
+        document.getElementById('category-dropdown').style.display = 'none';
+    }
+});
