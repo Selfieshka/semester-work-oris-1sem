@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.FinanceDto;
+import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.service.FinanceService;
 
 import java.io.IOException;
@@ -22,12 +23,17 @@ public class RevenueServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        financeService.addRevenue(new FinanceDto(
-                (Long) req.getSession().getAttribute("id"),
-                Double.parseDouble(req.getParameter("amount")),
-                "Выручка",
-                LocalDate.parse(req.getParameter("date"))
-        ));
-        resp.sendRedirect(getServletContext().getContextPath() + "/finance");
+        try {
+            financeService.addRevenue(new FinanceDto(
+                    (Long) req.getSession().getAttribute("id"),
+                    Double.parseDouble(req.getParameter("amount")),
+                    "Выручка",
+                    LocalDate.parse(req.getParameter("date"))
+            ));
+            resp.sendRedirect(getServletContext().getContextPath() + "/finance");
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+            req.getRequestDispatcher("/WEB-INF/view/finance.jsp").forward(req, resp);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
 import ru.kpfu.itis.kirillakhmetov.dto.SignInOwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
@@ -15,14 +16,11 @@ import ru.kpfu.itis.kirillakhmetov.validator.ValidationResult;
 
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class SecurityService {
     private final OwnerDao ownerDao;
     private final SignUpOwnerValidator signUpOwnerValidator = SingletonFactory.getInstance(SignUpOwnerValidator.class);
     private final SignInOwnerValidator signInOwnerValidator = SingletonFactory.getInstance(SignInOwnerValidator.class);
-
-    public SecurityService(OwnerDao ownerDao) {
-        this.ownerDao = ownerDao;
-    }
 
     public void signUp(SignUpOwnerDto signUpOwnerDto) throws ValidationException {
         ValidationResult validationResult = signUpOwnerValidator.isValid(signUpOwnerDto);

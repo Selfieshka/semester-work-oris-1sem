@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.BankAccountDto;
+import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.service.BankAccountService;
 
 import java.io.IOException;
@@ -21,11 +22,16 @@ public class MoneyServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        bankAccountService.addAccount(new BankAccountDto(
-                (Long) req.getSession().getAttribute("id"),
-                req.getParameter("bankName"),
-                Double.parseDouble(req.getParameter("amount"))
-        ));
-        resp.sendRedirect(getServletContext().getContextPath() + "/finance");
+        try {
+            bankAccountService.addAccount(new BankAccountDto(
+                    (Long) req.getSession().getAttribute("id"),
+                    req.getParameter("bankName"),
+                    Double.parseDouble(req.getParameter("amount"))
+            ));
+            resp.sendRedirect(getServletContext().getContextPath() + "/finance");
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+            req.getRequestDispatcher("/WEB-INF/view/finance.jsp").forward(req, resp);
+        }
     }
 }

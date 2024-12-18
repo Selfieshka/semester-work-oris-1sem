@@ -45,10 +45,10 @@
         <span class="nav-icon material-symbols-rounded close" id="close-revenue">Close</span>
         <form method=POST action="<c:url value="/finance/revenue"/>">
             <h3>Добавление выручки</h3>
-            <label for="revenue-amount">Сумма</label>
-            <input type="number" step="any" id="revenue-amount" name="amount" required/>
+            <label for="revenue-amount" >Сумма</label>
+            <input type="number" step="any" min="1" max="9999999999" id="revenue-amount" name="amount" required/>
             <label for="revenue-date">Дата, за которую вносится выручка:</label>
-            <input type="date" id="revenue-date" name="date" required/>
+            <input type="date" id="revenue-date" name="date" min="2000-01-01" max="9999-12-31" required/>
 
             <button type="submit">Добавить</button>
         </form>
@@ -59,12 +59,12 @@
         <span class="nav-icon material-symbols-rounded close" id="close-expense">Close</span>
         <form method=POST action="<c:url value="/finance/expense"/>">
             <h3>Добавление расхода</h3>
-            <label for="expense-amount">Сумма</label>
-            <input type="number" step="any" id="expense-amount" name="amount" required/>
             <label for="expense-category">Категория</label>
-            <input type="text" id="expense-category" name="category" required/>
+            <input type="text" id="expense-category" maxlength="30" name="category" required/>
+            <label for="expense-amount">Сумма</label>
+            <input type="number" step="any" min="1" max="9999999999" id="expense-amount" name="amount" required/>
             <label for="expense-date">Дата, за которую вносится расход:</label>
-            <input type="date" id="expense-date" name="date" required/>
+            <input type="date" id="expense-date" name="date" min="2000-01-01" max="9999-12-31" required/>
 
             <button type="submit">Добавить</button>
         </form>
@@ -76,14 +76,17 @@
         <form method=POST action="<c:url value="/finance/money"/>">
             <h3>Добавление денежного счёта</h3>
             <label for="money-bank">Банк</label>
-            <input type="text" id="money-bank" name="bankName" required/>
+            <input type="text" id="money-bank" maxlength="30" name="bankName" required/>
             <label for="money-amount">Сумма</label>
-            <input type="number" step="any" id="money-amount" name="amount" required/>
+            <input type="number" step="any" id="money-amount" name="amount" min="1" max="9999999999" required/>
 
             <button type="submit">Добавить</button>
         </form>
     </div>
 </div>
+
+<%@include file="/WEB-INF/view/parts/_errors.jsp" %>
+
 <div class="charts-row">
     <div class="chart-container">
         <canvas id="profitChart"></canvas>
