@@ -8,7 +8,6 @@ import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class StaffDao extends BaseDao<Employee> {
     //language=sql
@@ -44,11 +43,6 @@ public class StaffDao extends BaseDao<Employee> {
     }
 
     @Override
-    public Optional<Employee> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
     public void save(Employee employee) {
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
@@ -63,10 +57,5 @@ public class StaffDao extends BaseDao<Employee> {
         } catch (SQLException e) {
             throw new RuntimeException("Can't save employee");
         }
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 }

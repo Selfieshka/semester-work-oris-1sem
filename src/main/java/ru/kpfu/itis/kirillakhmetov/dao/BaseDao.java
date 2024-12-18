@@ -8,11 +8,31 @@ import java.util.Optional;
 public abstract class BaseDao<T> {
     RowMapper<T> mapper;
 
-    public abstract List<T> findAll();
+    /**
+     * @throws UnsupportedOperationException if method not implemented
+     */
+    public List<T> findAll() {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
 
-    public abstract Optional<T> findById(Long id);
+    /**
+     * @throws UnsupportedOperationException if method not implemented
+     */
+    public Optional<T> findById(Long id) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
 
-    public abstract void save(T t);
+    /**
+     * @throws UnsupportedOperationException if method not implemented
+     */
+    public void save(T t) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
 
-    public abstract boolean deleteById(Long id);
+    /**
+     * @throws UnsupportedOperationException if method not implemented
+     */
+    public boolean deleteById(Long id) {
+        throw new UnsupportedOperationException("Method not implemented");
+    }
 }

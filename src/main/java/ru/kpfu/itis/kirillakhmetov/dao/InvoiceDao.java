@@ -9,7 +9,6 @@ import ru.kpfu.itis.kirillakhmetov.util.ConnectionProvider;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class InvoiceDao extends BaseDao<Invoice> {
     //language=sql
@@ -34,25 +33,6 @@ public class InvoiceDao extends BaseDao<Invoice> {
 
     public InvoiceDao() {
         this.mapper = new InvoiceMapper();
-    }
-
-    @Override
-    public List<Invoice> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public Optional<Invoice> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public void save(Invoice invoice) {
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 
     public void saveInvoiceWithProducts(InvoiceDto invoiceDto, List<ProductDto> products) {
