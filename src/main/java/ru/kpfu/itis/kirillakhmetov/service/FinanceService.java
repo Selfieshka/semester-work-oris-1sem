@@ -3,7 +3,11 @@ package ru.kpfu.itis.kirillakhmetov.service;
 import ru.kpfu.itis.kirillakhmetov.dao.FinanceDao;
 import ru.kpfu.itis.kirillakhmetov.dto.*;
 import ru.kpfu.itis.kirillakhmetov.entity.Finance;
+import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.util.JsonConverter;
+import ru.kpfu.itis.kirillakhmetov.util.annotations.SingletonFactory;
+import ru.kpfu.itis.kirillakhmetov.validator.CreateExpenseValidator;
+import ru.kpfu.itis.kirillakhmetov.validator.ValidationResult;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +18,7 @@ public class FinanceService {
     private final FinanceDao financeDao;
     private static final int LIMIT = 5;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
+    private static final CreateExpenseValidator createExpenseValidator = SingletonFactory.getInstance(CreateExpenseValidator.class);
     public FinanceService(FinanceDao financeDao) {
         this.financeDao = financeDao;
     }
@@ -31,6 +35,10 @@ public class FinanceService {
     }
 
     public void addExpense(FinanceDto financeDto) {
+        ValidationResult validationResult = createExpenseValidator.isValid(financeDto);
+        if (!validationResult.isValid()) {
+            throw new ValidationException(validationResult.getErrors());
+        }
         financeDao.save(Finance.builder()
                 .owner_id(financeDto.owner_id())
                 .type("Расход")
@@ -127,7 +135,7 @@ public class FinanceService {
                 dateNow.format(FORMATTER),
                 monthRevenue,
                 monthExpenses,
-                (double) Math.round(prevMonthRecord * 100) / 100
+                prevMonthRecord < 0 ? 0 : (double) Math.round(prevMonthRecord * 100) / 100
         );
     }
 }
