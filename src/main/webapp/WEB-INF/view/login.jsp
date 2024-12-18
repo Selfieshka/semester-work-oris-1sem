@@ -50,14 +50,5 @@
                 </span>
         </div>
     </c:if>
-    <c:if test="${not empty requestScope.errors}">
-        <div class="errors-box">
-            <c:forEach var="error" items="${requestScope.errors}">
-                <span>${error.message()}</span>
-                <br>
-            </c:forEach>
-        </div>
-    </c:if>
-</div>
-</body>
-</html>
+    <%@include file="/WEB-INF/view/parts/_errors.jsp" %>
+<%@include file="/WEB-INF/view/parts/_footer.jsp" %>
