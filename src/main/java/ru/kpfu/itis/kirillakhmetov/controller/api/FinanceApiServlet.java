@@ -39,6 +39,18 @@ public class FinanceApiServlet extends HttpServlet {
             case SERVLET_BASE_PATH + "/profit":
                 resp.getWriter().write(financeService.calculateProfit(idOwner));
                 break;
+            case SERVLET_BASE_PATH + "/profit-analytics":
+                resp.getWriter().write(financeService.analyzeProfit(idOwner));
+                break;
+            case SERVLET_BASE_PATH + "/expense-analytics":
+                resp.getWriter().write(financeService.analyzeExpense(idOwner));
+                break;
+            case SERVLET_BASE_PATH + "/revenues-expenses/count":
+                resp.getWriter().write(financeService.getCountItems(idOwner));
+                break;
+            case SERVLET_BASE_PATH + "/revenues-expenses/items":
+                resp.getWriter().write(financeService.getPage(idOwner, Integer.parseInt(req.getParameter("page"))));
+                break;
             default:
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
                 break;

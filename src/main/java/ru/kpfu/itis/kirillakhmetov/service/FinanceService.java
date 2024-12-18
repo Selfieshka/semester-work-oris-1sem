@@ -1,41 +1,22 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.kpfu.itis.kirillakhmetov.dao.FinanceDao;
-import ru.kpfu.itis.kirillakhmetov.dto.ApiFinanceDto;
-import ru.kpfu.itis.kirillakhmetov.dto.FinanceDto;
-import ru.kpfu.itis.kirillakhmetov.dto.PointGraphDto;
+import ru.kpfu.itis.kirillakhmetov.dto.*;
 import ru.kpfu.itis.kirillakhmetov.entity.Finance;
+import ru.kpfu.itis.kirillakhmetov.util.JsonConverter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FinanceService {
     private final FinanceDao financeDao;
+    private static final int LIMIT = 5;
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 
     public FinanceService(FinanceDao financeDao) {
         this.financeDao = financeDao;
-    }
-
-    public List<FinanceDto> getInfo() {
-        List<Finance> finances = financeDao.findAll();
-        return List.of();
-    }
-
-    public String getBusinessProfitability() {
-        List<PointGraphDto> points =
-                financeDao.calculateProfitabilityForEachYear().stream()
-                        .map(profitability -> new PointGraphDto(
-                                Integer.toString(profitability.getYear()),
-                                (int) profitability.getValue()))
-                        .toList();
-        String jsonObject;
-        try {
-            jsonObject = new ObjectMapper().writeValueAsString(points);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка перевода данных в json");
-        }
-        return jsonObject;
     }
 
     public void addRevenue(FinanceDto financeDto) {
@@ -62,34 +43,91 @@ public class FinanceService {
 
     public String calculateRevenue(Long id) {
         double sumRevenue = financeDao.sumAllRevenue(id);
-        String jsonObject;
-        try {
-            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(sumRevenue));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка перевода данных в json");
-        }
-        return jsonObject;
+        return JsonConverter.convertToJson(new ApiFinanceDto(sumRevenue));
     }
 
     public String calculateExpense(Long id) {
         double sumExpense = financeDao.sumAllExpense(id);
-        String jsonObject;
-        try {
-            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(sumExpense));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка перевода данных в json");
-        }
-        return jsonObject;
+        return JsonConverter.convertToJson(new ApiFinanceDto(sumExpense));
     }
 
     public String calculateProfit(Long idOwner) {
         double profit = financeDao.sumAllRevenue(idOwner) - financeDao.sumAllExpense(idOwner);
-        String jsonObject;
-        try {
-            jsonObject = new ObjectMapper().writeValueAsString(new ApiFinanceDto(profit));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException("Ошибка перевода данных в json");
+        return JsonConverter.convertToJson(new ApiFinanceDto(profit));
+    }
+
+    public String analyzeProfit(Long idOwner) {
+        List<Finance> finances = financeDao.profitAnalysisByOwnerid(idOwner);
+        List<String> dates = new ArrayList<>();
+        List<String> amounts = new ArrayList<>();
+        String forecastDate = null;
+        if (!finances.isEmpty()) {
+            for (Finance finance : finances) {
+                dates.add(finance.getDate().format(FORMATTER));
+                amounts.add(String.valueOf(finance.getAmount()));
+            }
+            forecastDate = LocalDate.parse(dates.getLast(), FORMATTER).format(FORMATTER);
+            dates.add(forecastDate);
         }
-        return jsonObject;
+        String forecastValue = String.valueOf(calculateAverageDifference(amounts));
+        return JsonConverter.convertToJson(new ProfitDto(dates, amounts, forecastDate, forecastValue));
+    }
+
+    public String analyzeExpense(Long idOwner) {
+        List<Finance> finances = financeDao.expenseAnalysisByOwnerid(idOwner);
+        List<String> categories = new ArrayList<>();
+        List<String> amounts = new ArrayList<>();
+        for (Finance finance : finances) {
+            categories.add(String.valueOf(finance.getCategory()));
+            amounts.add(String.valueOf(finance.getAmount()));
+        }
+        return JsonConverter.convertToJson(new ExpenseDto(categories, amounts));
+    }
+
+    public String getPage(Long idOwner, int page) {
+        List<Finance> finances = financeDao.getPartRevenuesAndExpenses(
+                idOwner, LIMIT, LIMIT * (page - 1)
+        );
+        List<FinancePaginationDto> financePaginationDtos = new ArrayList<>();
+        for (Finance finance : finances) {
+            financePaginationDtos.add(new FinancePaginationDto(
+                    finance.getType(),
+                    finance.getAmount(),
+                    finance.getCategory(),
+                    finance.getDate().format(FORMATTER)
+            ));
+        }
+        return JsonConverter.convertToJson(financePaginationDtos);
+    }
+
+    public String getCountItems(Long idOwner) {
+        int result = (int) Math.ceil((double) financeDao.countRevenuesAndExpensesByOwnerId(idOwner) / LIMIT);
+        return "{\"totalPages\": %s}".formatted(result);
+    }
+
+    private double calculateAverageDifference(List<String> numbers) {
+        double totalDifference = 0.0;
+        int count = 0;
+        double sum = 0;
+        for (int i = 0; i < numbers.size() - 1; i++) {
+            totalDifference += Double.parseDouble(numbers.get(i + 1)) - Double.parseDouble(numbers.get(i));
+            sum += Double.parseDouble(numbers.get(i));
+            count++;
+        }
+        return (sum + totalDifference) / count;
+    }
+
+    public MonthInfo getMonthInfo(Long id) {
+        LocalDate dateNow = LocalDate.now();
+        double monthRevenue = financeDao.getSumRevenuesMonthById(id);
+        double monthExpenses = financeDao.getSumExpensesMonthById(id);
+        double prevMonthRecord = financeDao.getMonthProfitById(id, dateNow.minusMonths(1))
+                - financeDao.getMonthProfitById(id, dateNow);
+        return new MonthInfo(
+                dateNow.format(FORMATTER),
+                monthRevenue,
+                monthExpenses,
+                (double) Math.round(prevMonthRecord * 100) / 100
+        );
     }
 }
