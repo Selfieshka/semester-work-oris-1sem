@@ -15,7 +15,7 @@ public final class CloudinaryUtil {
     private static final String CLOUD_NAME = "cloud_name";
     private static final String API_KEY = "api_key";
     private static final String API_SECRET = "api_secret";
-    private static final String MY_CLOUD_NAME = System.getenv("CLOUDINARY_API_KEY");
+    private static final String MY_CLOUD_NAME = System.getenv("CLOUDINARY_CLOUD_NAME");
     private static final String MY_API_KEY = System.getenv("CLOUDINARY_API_KEY");
     private static final String MY_API_SECRET = System.getenv("CLOUDINARY_API_SECRET");
     private static final String UPLOAD_DIRECTORY = "uploads";
