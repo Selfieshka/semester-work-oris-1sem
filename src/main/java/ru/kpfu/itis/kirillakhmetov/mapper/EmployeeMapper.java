@@ -8,14 +8,14 @@ import java.sql.SQLException;
 public class EmployeeMapper implements RowMapper<Employee> {
     @Override
     public Employee mapRow(ResultSet resultSet) throws SQLException {
-        return new Employee(
-                resultSet.getLong("employee_id"),
-                resultSet.getString("first_name"),
-                resultSet.getString("last_name"),
-                resultSet.getString("patronymic"),
-                resultSet.getDate("effective_date").toLocalDate(),
-                resultSet.getString("name"),
-                resultSet.getInt("salary")
-        );
+        return Employee.builder()
+                .id(resultSet.getLong("employee_id"))
+                .ownerId(resultSet.getLong("owner_id"))
+                .firstName(resultSet.getString("first_name"))
+                .lastName(resultSet.getString("last_name"))
+                .patronymic(resultSet.getString("patronymic"))
+                .effectiveDate(resultSet.getDate("effective_date").toLocalDate())
+                .salary(resultSet.getInt("salary"))
+                .build();
     }
 }

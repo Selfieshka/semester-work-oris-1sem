@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.OwnerDto;
 import ru.kpfu.itis.kirillakhmetov.dto.SignInOwnerDto;
+import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.service.OwnerService;
 import ru.kpfu.itis.kirillakhmetov.service.SecurityService;
 
@@ -33,9 +34,8 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        boolean signInAttempt = securityService.signIn(new SignInOwnerDto(email, password));
-
-        if (signInAttempt) {
+        try {
+            securityService.signIn(new SignInOwnerDto(email, password));
             Optional<OwnerDto> ownerFromBd = ownerService.getProfileInfo(email);
             if (ownerFromBd.isPresent()) {
                 OwnerDto owner = ownerFromBd.get();
@@ -43,8 +43,9 @@ public class LoginServlet extends HttpServlet {
                 req.getSession().setAttribute("owner", owner);
             }
             resp.sendRedirect(getServletContext().getContextPath() + "/main");
-        } else {
-            getServletContext().getRequestDispatcher("/WEB-INF/view/login.jsp").forward(req, resp);
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+            doGet(req, resp);
         }
     }
 }

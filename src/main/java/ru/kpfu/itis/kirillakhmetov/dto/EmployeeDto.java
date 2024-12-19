@@ -1,7 +1,8 @@
 package ru.kpfu.itis.kirillakhmetov.dto;
 
 import java.time.LocalDate;
+import java.util.List;
 
-public record EmployeeDto(String firstName, String lastName, String patronymic, LocalDate effectiveDate,
-                          String position, Integer salary) {
+public record EmployeeDto(Long ownerId, String firstName, String lastName, String patronymic, LocalDate effectiveDate,
+                          List<String> position, Integer salary) {
 }

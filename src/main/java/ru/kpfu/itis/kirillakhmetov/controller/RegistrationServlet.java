@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.SignUpOwnerDto;
+import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.service.SecurityService;
 
 import java.io.IOException;
@@ -26,17 +27,17 @@ public class RegistrationServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        boolean signUpAttempt = securityService.signUp(new SignUpOwnerDto(
-                req.getParameter("username"),
-                req.getParameter("email"),
-                req.getParameter("password"),
-                req.getParameter("businessName"))
-        );
-
-        if (signUpAttempt) {
-            resp.sendRedirect(getServletContext().getContextPath() + "/login?registered=success");
-        } else {
-            resp.sendRedirect(getServletContext().getContextPath() + "/registration?registered=error");
+        try {
+            securityService.signUp(new SignUpOwnerDto(
+                    req.getParameter("username"),
+                    req.getParameter("email"),
+                    req.getParameter("password"),
+                    req.getParameter("businessName"))
+            );
+            resp.sendRedirect(getServletContext().getContextPath() + "/login");
+        } catch (ValidationException e) {
+            req.setAttribute("errors", e.getErrors());
+            doGet(req, resp);
         }
     }
 }

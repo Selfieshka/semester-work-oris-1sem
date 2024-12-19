@@ -24,30 +24,35 @@
     </div>
     <div class="account-edit">
         <div class="input-container">
-            <label>Фамилия</label>
-            <input type="text" name="lastName" placeholder="Фамилия" value="${sessionScope.get("owner").lastName()}"
-                   readonly/>
+            <label for="lastName">Фамилия</label>
+            <input type="text" id="lastName" name="lastName" placeholder="Фамилия"
+                   value="${sessionScope.get("owner").lastName()}" readonly/>
         </div>
         <div class="input-container">
-            <label>Имя</label>
-            <input type="text" name="firstName" placeholder="Имя" value="${sessionScope.get("owner").firstName()}"
-                   readonly/>
+            <label for="firstName">Имя</label>
+            <input type="text" id="firstName" name="firstName" placeholder="Имя"
+                   value="${sessionScope.get("owner").firstName()}" readonly/>
         </div>
         <div class="input-container">
-            <label>Отчество</label>
-            <input type="text" name="patronymic" placeholder="Отчество"
+            <label for="patronymic">Отчество</label>
+            <input type="text" id="patronymic" name="patronymic" placeholder="Отчество"
                    value="${sessionScope.get("owner").patronymic()}" readonly/>
+        </div>
+        <div class="input-container">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" value="${sessionScope.get("owner").email()}"
+                   readonly/>
         </div>
     </div>
     <div class="account-edit">
         <div class="input-container">
-            <label>Возраст</label>
-            <input type="number" name="age" placeholder="Возраст" value="${sessionScope.get("owner").age()}"
+            <label for="age">Возраст</label>
+            <input type="number" id="age" name="age" placeholder="Возраст" value="${sessionScope.get("owner").age()}"
                    readonly/>
         </div>
         <div class="input-container">
-            <label>Номер телефона</label>
-            <input type="text" name="phoneNumber" placeholder="Номер телефона"
+            <label for="phoneNumber">Номер телефона</label>
+            <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Номер телефона"
                    value="${sessionScope.get("owner").phoneNumber()}" readonly/>
         </div>
     </div>

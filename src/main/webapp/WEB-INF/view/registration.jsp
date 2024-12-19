@@ -32,7 +32,5 @@
             <p>Уже зарегистрировались? <a class="login" href="${pageContext.request.contextPath}/login">Войти</a></p>
         </div>
     </form>
-</div>
-</body>
-
-</html>
+    <%@include file="/WEB-INF/view/parts/_errors.jsp" %>
+<%@include file="/WEB-INF/view/parts/_footer.jsp" %>

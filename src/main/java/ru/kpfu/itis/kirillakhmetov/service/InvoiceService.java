@@ -1,6 +1,7 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
 import jakarta.servlet.http.Part;
+import lombok.RequiredArgsConstructor;
 import org.apache.poi.xssf.usermodel.XSSFWorkbookType;
 import ru.kpfu.itis.kirillakhmetov.dao.InvoiceDao;
 import ru.kpfu.itis.kirillakhmetov.dto.InvoiceDto;
@@ -14,12 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@RequiredArgsConstructor
 public class InvoiceService {
     private final InvoiceDao invoiceDao;
-
-    public InvoiceService(InvoiceDao invoiceDao) {
-        this.invoiceDao = invoiceDao;
-    }
 
     public void saveInvoiceInfo(InvoiceDto invoiceDto, Part invoice, Map<String, String> headerNames) {
         List<ProductDto> products = analyze(invoice, headerNames);

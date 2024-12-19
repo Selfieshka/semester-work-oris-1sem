@@ -36,27 +36,19 @@
             <a class="registration" href="${pageContext.request.contextPath}/registration">Регистрация</a>
         </p>
     </div>
-    <c:if test="${param.login eq 'error'}">
-        <div class="message-box-error">
-                <span>
-                        Неверный email или пароль
-                </span>
-        </div>
-    </c:if>
     <c:if test="${not empty param.registered}">
-        <div class="message-box-success">
+    <div class="message-box-success">
                 <span>
                     Вы успешно зарегистрировались, повторите введённые данные
                 </span>
-        </div>
+    </div>
     </c:if>
     <c:if test="${not empty param.logout}">
-        <div class="message-box-logout">
+    <div class="message-box-logout">
                 <span>
                     Вы вышли из аккаунта
                 </span>
-        </div>
+    </div>
     </c:if>
-</div>
-</body>
-</html>
+    <%@include file="/WEB-INF/view/parts/_errors.jsp" %>
+<%@include file="/WEB-INF/view/parts/_footer.jsp" %>

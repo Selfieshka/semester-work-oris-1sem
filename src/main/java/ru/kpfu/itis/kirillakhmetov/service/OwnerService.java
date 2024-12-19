@@ -1,6 +1,7 @@
 package ru.kpfu.itis.kirillakhmetov.service;
 
 import jakarta.servlet.http.Part;
+import lombok.RequiredArgsConstructor;
 import ru.kpfu.itis.kirillakhmetov.dao.OwnerDao;
 import ru.kpfu.itis.kirillakhmetov.dto.OwnerDto;
 import ru.kpfu.itis.kirillakhmetov.entity.Owner;
@@ -10,12 +11,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 public class OwnerService {
     private final OwnerDao ownerDao;
-
-    public OwnerService(OwnerDao ownerDao) {
-        this.ownerDao = ownerDao;
-    }
 
     public Long getOwnerIdByEmail(String email) {
         return ownerDao.findByEmail(email).get().getId();

@@ -164,3 +164,15 @@ body {
     border-radius: 3px;
     text-align: center;
 }
+
+.errors-box {
+    margin-top: 15px;
+    background-color: rgb(205, 23, 23);
+    padding: 10px;
+    border: 1px solid red;
+    width: 420px;
+    color: black;
+    border-radius: 3px;
+    font-size: 12px;
+    text-align: center;
+}

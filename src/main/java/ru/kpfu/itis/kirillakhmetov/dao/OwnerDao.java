@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Optional;
 
 public class OwnerDao extends BaseDao<Owner> {
@@ -48,16 +47,6 @@ public class OwnerDao extends BaseDao<Owner> {
     }
 
     @Override
-    public List<Owner> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public Optional<Owner> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
     public void save(Owner owner) {
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
@@ -70,11 +59,6 @@ public class OwnerDao extends BaseDao<Owner> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 
     public Optional<Owner> findByEmail(String email) {

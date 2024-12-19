@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Optional;
 
 public class BankAccountDao extends BaseDao<BankAccount> {
     //language=sql
@@ -31,16 +29,6 @@ public class BankAccountDao extends BaseDao<BankAccount> {
     }
 
     @Override
-    public List<BankAccount> findAll() {
-        return List.of();
-    }
-
-    @Override
-    public Optional<BankAccount> findById(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
     public void save(BankAccount bankAccount) {
         try (Connection connection = ConnectionProvider.getConnection();
              PreparedStatement statement = connection.prepareStatement(SQL_SAVE)) {
@@ -51,11 +39,6 @@ public class BankAccountDao extends BaseDao<BankAccount> {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean deleteById(Long id) {
-        return false;
     }
 
     public double sumAllAmount(Long id) {

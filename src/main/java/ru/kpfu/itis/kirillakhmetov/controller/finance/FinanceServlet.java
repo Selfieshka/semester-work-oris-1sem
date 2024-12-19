@@ -20,6 +20,7 @@ public class FinanceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("monthInfo", financeService.getMonthInfo((Long) req.getSession().getAttribute("id")));
         getServletContext().getRequestDispatcher("/WEB-INF/view/finance.jsp").forward(req, resp);
     }
 }

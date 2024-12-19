@@ -12,8 +12,8 @@ import java.io.IOException;
 
 @WebFilter("/*")
 public class SecurityFilter extends HttpFilter {
-    private static final String[] UNPROTECTED_PATHS = {"/login", "/registration",
-            "/style/login.css", "/style/registration.css",
+    private static final String[] UNPROTECTED_PATHS = {"/login", "/registration", "/welcome",
+            "/style/login.css", "/style/registration.css", "/style/welcome.css",
             "/img/login.svg", "/img/registration.svg"};
     private SecurityService securityService;
 
@@ -36,7 +36,7 @@ public class SecurityFilter extends HttpFilter {
         if (ownerIsSigned && matchPaths) {
             res.sendRedirect(getServletContext().getContextPath() + "/profile");
         } else if (!ownerIsSigned && !matchPaths) {
-            res.sendRedirect(getServletContext().getContextPath() + "/login");
+            res.sendRedirect(getServletContext().getContextPath() + "/welcome");
         } else {
             chain.doFilter(req, res);
         }

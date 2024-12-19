@@ -1,3 +1,7 @@
+const currentPath = window.location.pathname;
+const pathParts = currentPath.split('/');
+const basePath = '/' + pathParts[1];
+
 const editButton = document.getElementById('editButton');
 const cancelButton = document.getElementById('cancelButton');
 const saveButton = document.getElementById('saveButton');
@@ -13,6 +17,8 @@ editButton.addEventListener('click', function () {
     inputs.forEach(input => {
         input.removeAttribute('readonly');
     });
+
+    document.getElementById('email').readOnly = true;
 
     editButton.classList.add('hidden');
     cancelButton.classList.remove('hidden');
@@ -43,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: '/BusinessEfficiency/profile',
+            url: basePath + '/profile',
             data: formData,
             success: function (response) {
                 const inputs = document.querySelectorAll('.account-edit input');
@@ -86,11 +92,11 @@ $(document).ready(function () {
     });
 
     function sendFileToServer(file) {
-        var formData = new FormData();
+        const formData = new FormData();
         formData.append('profilePhoto', file);
 
         $.ajax({
-            url: '/BusinessEfficiency/profile/upload',
+            url: basePath + '/profile/upload',
             type: 'POST',
             data: formData,
             contentType: false,
