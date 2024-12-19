@@ -1,45 +1,3 @@
-CREATE SEQUENCE position_sequence
-    START WITH 100000
-    INCREMENT BY 1
-    CACHE 50;
-
-CREATE TABLE position
-(
-    position_id BIGINT NOT NULL DEFAULT NEXTVAL('position_sequence'),
-    name        VARCHAR(15),
-    -------------------------
-    CONSTRAINT position_id_pk PRIMARY KEY (position_id),
-    CONSTRAINT position_name_uq UNIQUE (name)
-);
-
-
-CREATE SEQUENCE employee_sequence
-    START WITH 100000
-    INCREMENT BY 1
-    CACHE 50;
-
-CREATE TABLE employee
-(
-    employee_id    BIGINT      NOT NULL DEFAULT NEXTVAL('employee_sequence'),
-    first_name     VARCHAR(30) NOT NULL,
-    last_name      VARCHAR(30) NOT NULL,
-    patronymic     VARCHAR(30),
-    effective_date DATE        NOT NULL,
-    position_id    INTEGER     NOT NULL,
-    salary         INTEGER     NOT NULL,
-    -----------------------------------
-    CONSTRAINT employee_id_pk PRIMARY KEY (employee_id),
-    CONSTRAINT position_id_fk FOREIGN KEY (position_id) REFERENCES position (position_id) ON DELETE CASCADE
-);
-
-COMMENT ON COLUMN employee.effective_date IS 'Дата вступления в коллектив';
-
-
-CREATE SEQUENCE finance_sequence
-    START WITH 100000
-    INCREMENT BY 1
-    CACHE 50;
-
 CREATE SEQUENCE owner_sequence
     START WITH 100000
     INCREMENT BY 1
@@ -63,6 +21,60 @@ CREATE TABLE owner
 );
 
 
+CREATE SEQUENCE position_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE position
+(
+    position_id BIGINT NOT NULL DEFAULT NEXTVAL('position_sequence'),
+    name        VARCHAR(15),
+    -------------------------
+    CONSTRAINT position_id_pk PRIMARY KEY (position_id),
+    CONSTRAINT position_name_uq UNIQUE (name)
+);
+
+
+CREATE SEQUENCE employee_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+CREATE TABLE employee
+(
+    employee_id    BIGINT      NOT NULL DEFAULT NEXTVAL('employee_sequence'),
+    owner_id       BIGINT      NOT NULL,
+    first_name     VARCHAR(30) NOT NULL,
+    last_name      VARCHAR(30) NOT NULL,
+    patronymic     VARCHAR(30),
+    effective_date DATE        NOT NULL,
+    salary         INTEGER     NOT NULL,
+    -----------------------------------
+    CONSTRAINT employee_id_pk PRIMARY KEY (employee_id),
+    CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id)
+);
+
+COMMENT ON COLUMN employee.effective_date IS 'Дата вступления в коллектив';
+
+
+CREATE TABLE employee_position
+(
+    employee_id BIGINT NOT NULL,
+    position_id BIGINT NOT NULL,
+    ---------------------------
+    CONSTRAINT employee_position_id_pk PRIMARY KEY (employee_id, position_id),
+    CONSTRAINT employee_id_fk FOREIGN KEY (employee_id) REFERENCES employee ON DELETE CASCADE,
+    CONSTRAINT position_id_fk FOREIGN KEY (position_id) REFERENCES position ON DELETE CASCADE
+);
+
+
+CREATE SEQUENCE finance_sequence
+    START WITH 100000
+    INCREMENT BY 1
+    CACHE 50;
+
+
 CREATE TABLE finance
 (
     finance_id BIGINT         NOT NULL DEFAULT NEXTVAL('finance_sequence'),
@@ -75,6 +87,7 @@ CREATE TABLE finance
     CONSTRAINT finance_id_pk PRIMARY KEY (finance_id),
     CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id) ON DELETE CASCADE
 );
+
 
 COMMENT ON TABLE finance IS 'Таблица доходов и расходов';
 
@@ -139,4 +152,4 @@ CREATE TABLE bank_account
     CONSTRAINT owner_id_fk FOREIGN KEY (owner_id) REFERENCES owner (owner_id)
 );
 
-COMMENT ON TABLE bank_account IS 'Банковские счета бизнеса'
+COMMENT ON TABLE bank_account IS 'Банковские счета бизнеса';
