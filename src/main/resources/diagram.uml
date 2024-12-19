@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4</OriginalElement>
+  <nodes>
+    <node x="-256.6744186046512" y="-208.93023255813955">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.owner</node>
+    <node x="-220.0" y="839.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.product</node>
+    <node x="484.0" y="295.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.position</node>
+    <node x="-34.0" y="239.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.finance</node>
+    <node x="-219.5" y="527.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.invoice</node>
+    <node x="321.0" y="895.5">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee_position</node>
+    <node x="583.0" y="527.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.bank_account</node>
+    <node x="151.0" y="485.0">eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.bank_account" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.owner" relationship="REFERENCES">
+      <point x="0.0" y="-73.0" />
+      <point x="760.0" y="200.0" />
+      <point x="-133.17441860465118" y="200.0" />
+      <point x="0.0" y="157.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee_position" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.position" relationship="REFERENCES">
+      <point x="52.0" y="-44.5" />
+      <point x="477.0" y="860.0" />
+      <point x="560.0" y="860.0" />
+      <point x="0.0" y="45.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.invoice" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.owner" relationship="REFERENCES">
+      <point x="0.0" y="-73.0" />
+      <point x="-60.0" y="342.0" />
+      <point x="-133.17441860465118" y="342.0" />
+      <point x="0.0" y="157.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee_position" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee" relationship="REFERENCES">
+      <point x="-52.0" y="-44.5" />
+      <point x="373.0" y="860.0" />
+      <point x="340.0" y="860.0" />
+      <point x="0.0" y="115.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.owner" relationship="REFERENCES">
+      <point x="0.0" y="-115.0" />
+      <point x="340.0" y="200.0" />
+      <point x="-133.17441860465118" y="200.0" />
+      <point x="0.0" y="157.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.product" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.invoice" relationship="REFERENCES">
+      <point x="0.0" y="-101.0" />
+      <point x="0.0" y="800.0" />
+      <point x="-60.0" y="800.0" />
+      <point x="0.0" y="73.0" />
+    </edge>
+    <edge source="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.finance" target="eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.owner" relationship="REFERENCES">
+      <point x="0.0" y="-101.0" />
+      <point x="120.0" y="200.0" />
+      <point x="-133.17441860465118" y="200.0" />
+      <point x="0.0" y="157.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.4236453201970443" showDependencies="false" x="358.5" y="442.0" />
+  <SelectedNodes>
+    <node>eb5196f2-bad5-45b1-a0e0-d4a025ab3fd4.TABLE:BusinessEfficiency.public.employee_position</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
