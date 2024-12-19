@@ -12,18 +12,19 @@ public class StaffService {
 
     private final StaffDao staffDao;
 
-    public List<Employee> getStaff() {
-        return staffDao.findAll();
+    public List<Employee> getStaff(Long id) {
+        return staffDao.findAll(id);
     }
 
-    public void addEmployee(EmployeeDto employee) {
-        staffDao.save(new Employee(
-                employee.firstName(),
-                employee.lastName(),
-                employee.patronymic(),
-                employee.effectiveDate(),
-                employee.position(),
-                employee.salary()
-        ));
+    public void saveEmployee(EmployeeDto employee) {
+        staffDao.save(Employee.builder()
+                .ownerId(employee.ownerId())
+                .firstName(employee.firstName())
+                .lastName(employee.lastName())
+                .patronymic(employee.patronymic())
+                .effectiveDate(employee.effectiveDate())
+                .position(employee.position())
+                .salary(employee.salary())
+                .build());
     }
 }
