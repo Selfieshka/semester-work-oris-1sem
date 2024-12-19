@@ -45,7 +45,7 @@
         <span class="nav-icon material-symbols-rounded close" id="close-revenue">Close</span>
         <form method=POST action="<c:url value="/finance/revenue"/>">
             <h3>Добавление выручки</h3>
-            <label for="revenue-amount" >Сумма</label>
+            <label for="revenue-amount">Сумма</label>
             <input type="number" step="any" min="1" max="9999999999" id="revenue-amount" name="amount" required/>
             <label for="revenue-date">Дата, за которую вносится выручка:</label>
             <input type="date" id="revenue-date" name="date" min="2000-01-01" max="9999-12-31" required/>
@@ -61,7 +61,8 @@
             <h3>Добавление расхода</h3>
             <label for="expense-category">Категория</label>
             <div class="dropdown">
-                <input type="text" id="expense-category" name="category" placeholder="Выберите категорию" readonly required onclick="toggleDropdown()">
+                <input type="text" id="expense-category" name="category" placeholder="Выберите категорию" readonly
+                       required onclick="toggleDropdown()">
                 <div class="dropdown-content" id="category-dropdown">
                     <div class="category-item" onclick="selectCategory('Закупки товаров')">Закупки товаров</div>
                     <div class="category-item" onclick="selectCategory('Аренда')">Аренда</div>

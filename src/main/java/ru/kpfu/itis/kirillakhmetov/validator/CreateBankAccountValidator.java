@@ -10,11 +10,11 @@ import ru.kpfu.itis.kirillakhmetov.util.annotations.Singleton;
 public class CreateBankAccountValidator implements Validator<BankAccountDto> {
     @Override
     public ValidationResult isValid(BankAccountDto bankAccountDto) {
-       ValidationResult validationResult = new ValidationResult();
-        if  (bankAccountDto.amount() == 0) {
+        ValidationResult validationResult = new ValidationResult();
+        if (bankAccountDto.amount() == 0) {
             validationResult.add(new Error("invalid.amount", "Поле \"Сумма\" не может быть 0"));
         }
-        if  (bankAccountDto.bankName().isEmpty()) {
+        if (bankAccountDto.bankName().isEmpty()) {
             validationResult.add(new Error("invalid.bankName", "Поле \"Банк\" не может быть пустым"));
         }
         return validationResult;

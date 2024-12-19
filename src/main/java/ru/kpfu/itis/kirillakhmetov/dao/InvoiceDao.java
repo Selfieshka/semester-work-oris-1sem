@@ -66,6 +66,12 @@ public class InvoiceDao extends BaseDao<Invoice> {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
+        } finally {
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

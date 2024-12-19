@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import ru.kpfu.itis.kirillakhmetov.dto.FinanceDto;
-import ru.kpfu.itis.kirillakhmetov.entity.Finance;
 import ru.kpfu.itis.kirillakhmetov.exception.ValidationException;
 import ru.kpfu.itis.kirillakhmetov.service.FinanceService;
 
