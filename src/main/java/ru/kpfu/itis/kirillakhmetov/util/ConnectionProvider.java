@@ -19,7 +19,7 @@ public final class ConnectionProvider {
     private static final String DB_NAME = System.getenv("DB_NAME");
     private static final String DB_USER = System.getenv("DB_USER");
     private static final String DB_PASSWORD = System.getenv("DB_PASSWORD");
-    private static final int DEFAULT_POOL_SIZE = 10;
+    private static final int DEFAULT_POOL_SIZE = 20;
     private static BlockingQueue<Connection> pool;
 
     static {
