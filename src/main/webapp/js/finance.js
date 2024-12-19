@@ -64,10 +64,10 @@ window.onclick = function (event) {
 * */
 $(document).ready(function () {
     const requests = [
-        {url: basePath + '/api/v1/stats/expense', selector: '#expense-box p', defaultMessage: 'Загрузка...'},
-        {url: basePath + '/api/v1/stats/revenue', selector: '#revenue-box p', defaultMessage: 'Загрузка...'},
-        {url: basePath + '/api/v1/stats/money', selector: '#money-box p', defaultMessage: 'Загрузка...'},
-        {url: basePath + '/api/v1/stats/profit', selector: '#profit-box p', defaultMessage: 'Загрузка...'},
+        {url: '/api/v1/stats/expense', selector: '#expense-box p', defaultMessage: 'Загрузка...'},
+        {url: '/api/v1/stats/revenue', selector: '#revenue-box p', defaultMessage: 'Загрузка...'},
+        {url: '/api/v1/stats/money', selector: '#money-box p', defaultMessage: 'Загрузка...'},
+        {url: '/api/v1/stats/profit', selector: '#profit-box p', defaultMessage: 'Загрузка...'},
     ];
 
     function fetchData(url, selector, defaultMessage) {
@@ -103,7 +103,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     const ctx1 = document.getElementById('profitChart').getContext('2d');
     $.ajax({
-        url: basePath + '/api/v1/stats/profit-analytics',
+        url: '/api/v1/stats/profit-analytics',
         type: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -296,7 +296,7 @@ $(document).ready(function () {
     }
 
     $.ajax({
-        url: basePath + '/api/v1/stats/expense-analytics',
+        url: '/api/v1/stats/expense-analytics',
         type: 'GET',
         dataType: 'json',
         success: function (response) {
@@ -371,7 +371,7 @@ let totalPages = 1;
 
 function fetchData(page) {
     $.ajax({
-        url: basePath + `/api/v1/stats/revenues-expenses/items?page=${page}`,
+        url: `/api/v1/stats/revenues-expenses/items?page=${page}`,
         method: 'GET',
         success: function (data) {
             renderData(data);
@@ -384,7 +384,7 @@ function fetchData(page) {
 
 function fetchTotalPages() {
     $.ajax({
-        url: basePath + '/api/v1/stats/revenues-expenses/count',
+        url: '/api/v1/stats/revenues-expenses/count',
         method: 'GET',
         success: function (data) {
             totalPages = data.totalPages;

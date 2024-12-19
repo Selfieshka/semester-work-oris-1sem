@@ -49,7 +49,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: 'POST',
-            url: basePath + '/profile',
+            url: '/profile',
             data: formData,
             success: function (response) {
                 const inputs = document.querySelectorAll('.account-edit input');
@@ -96,7 +96,7 @@ $(document).ready(function () {
         formData.append('profilePhoto', file);
 
         $.ajax({
-            url: basePath + '/profile/upload',
+            url: '/profile/upload',
             type: 'POST',
             data: formData,
             contentType: false,
