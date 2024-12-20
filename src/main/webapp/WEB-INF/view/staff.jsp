@@ -6,6 +6,7 @@
 <head>
     <title>Сотрудники</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/style/staff.css"/>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="<c:url value="/js/staff.js"/>"></script>
 </head>
 
@@ -17,6 +18,14 @@
 <%@include file="/WEB-INF/view/parts/_errors.jsp" %>
 <div class="employee-list">
     <button class="add-btn" id="addEmployeeBtn">Добавить сотрудника</button>
+    <div class="employee-header">
+        <span>Имя</span>
+        <span>Фамилия</span>
+        <span>Отчество</span>
+        <span>Дата</span>
+        <span>Должность</span>
+        <span>Зарплата</span>
+    </div>
     <c:forEach items="${staff}" var="employee">
         <div class="employee-row">
             <div class="employee-info">
@@ -27,7 +36,8 @@
                 <span><c:out value="${employee.position}"/></span>
                 <span>₽ <c:out value="${employee.salary}"/></span>
             </div>
-            <span class="delete-btn" onclick="deleteEmployee(${employee.id})">&times;</span>
+            <span class="delete-btn"
+                  onclick="deleteEmployee(${employee.id}, this.closest('.employee-row'))">&times;</span>
         </div>
     </c:forEach>
 </div>
@@ -36,11 +46,12 @@
     <div class="modal-content">
         <span class="close" id="closeModal">&times;</span>
         <form method="POST">
+            <label for="lastName">Фамилия:</label>
+            <input type="text" id="lastName" name="lastName" required><br>
+
             <label for="firstName">Имя:</label>
             <input type="text" id="firstName" name="firstName" required><br>
 
-            <label for="lastName">Фамилия:</label>
-            <input type="text" id="lastName" name="lastName" required><br>
 
             <label for="patronymic">Отчество:</label>
             <input type="text" id="patronymic" name="patronymic"><br>

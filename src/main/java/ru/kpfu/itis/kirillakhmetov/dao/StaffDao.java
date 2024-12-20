@@ -19,8 +19,8 @@ public class StaffDao extends BaseDao<Employee> {
             INNER JOIN employee_position USING(employee_id)
             INNER JOIN position USING(position_id)
             WHERE owner_id = ?
-            GROUP BY owner_id, first_name, last_name, patronymic, effective_date, salary, employee_id
-            ORDER BY employee_id;
+            GROUP BY employee_id, effective_date
+            ORDER BY effective_date;
             """;
     //language=sql
     private final static String SQL_SAVE_EMPLOYEE = """
@@ -39,6 +39,12 @@ public class StaffDao extends BaseDao<Employee> {
     private final static String SQL_SAVE_EMPLOYEE_POSITION = """
             INSERT INTO employee_position(employee_id, position_id)
             VALUES (?, ?)
+            """;
+
+    //language=sql
+    private final static String SQL_DELETE_EMPLOYEE_BY_ID = """
+            DELETE FROM employee
+            WHERE employee_id = ?
             """;
 
 
@@ -65,11 +71,9 @@ public class StaffDao extends BaseDao<Employee> {
             statementEmployee.executeUpdate();
 
             ResultSet resultSet = statementEmployee.getGeneratedKeys();
-
             if (resultSet.next()) {
                 long employeeId = resultSet.getLong(1);
                 List<Long> positionsId = new ArrayList<>();
-
                 for (String position : employee.getPosition()) {
                     statementPosition.setString(1, position);
                     try (ResultSet resultSetPosition = statementPosition.executeQuery()) {
@@ -90,17 +94,12 @@ public class StaffDao extends BaseDao<Employee> {
             }
 
             connection.commit();
+            connection.setAutoCommit(false);
         } catch (SQLException e) {
             try {
                 connection.rollback();
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
-            }
-        } finally {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
             }
         }
     }
@@ -119,6 +118,17 @@ public class StaffDao extends BaseDao<Employee> {
                 result.add(employee);
             }
             return result;
+        } catch (SQLException e) {
+            throw new RuntimeException("Can't find all employee", e);
+        }
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_EMPLOYEE_BY_ID)) {
+            statement.setLong(1, id);
+            return statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException("Can't find all employee", e);
         }

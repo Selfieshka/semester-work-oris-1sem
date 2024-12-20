@@ -1,14 +1,24 @@
 .header {
     text-align: center;
     padding: 20px 0;
-    background-color: #007bff;
-    color: white;
+    background-color: #ffe8a3;
+    color: #333;
+    border-radius: 16px;
     margin-bottom: 20px;
 }
 
 .employee-list {
     width: 80%;
     margin: auto;
+}
+
+.employee-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #f9f9f9;
+    padding: 10px;
+    font-weight: bold;
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .employee-row {
@@ -31,10 +41,12 @@
 .employee-info {
     display: flex;
     gap: 20px;
+    flex: 1;
 }
 
 .employee-info span {
-    font-weight: bold;
+    flex: 1;
+    text-align: left;
 }
 
 .delete-btn {
@@ -48,15 +60,11 @@
     margin: 20px auto;
     padding: 10px 20px;
     font-size: 14px;
-    background-color: #007bff;
+    background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.add-btn:hover {
-    background-color: #0056b3;
 }
 
 .modal-container {
@@ -106,15 +114,11 @@ input, select {
 button {
     margin-top: 20px;
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #333;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-button:hover {
-    background-color: #0056b3;
 }
 
 .job-options {
@@ -143,7 +147,7 @@ button:hover {
 
 .job-tag {
     padding: 5px 10px;
-    background-color: #007bff;
+    background-color: #333;
     color: white;
     border-radius: 15px;
     display: inline-block;

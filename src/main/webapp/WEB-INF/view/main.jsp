@@ -58,9 +58,14 @@
         <button type="button" id="edit-button">Редактировать</button>
     </form>
 </div>
-
-<div class="map-container">
-    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d560.7838067643488!2d49.121194169674766!3d55.790889752307734!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sru!4v1734639070953!5m2!1sru!2sru"
-            allowfullscreen="" loading="lazy"></iframe>
+<div class="map-container" style="position:relative;overflow:hidden;"><a
+        href="https://yandex.ru/maps/org/it_park_im_bashira_rameyeva/209623831137/?utm_medium=mapframe&utm_source=maps"
+        style="color:#eee;font-size:12px;position:absolute;top:0px;">ИТ-парк им. Башира Рамеева</a><a
+        href="https://yandex.ru/maps/43/kazan/category/science_park/126204989789/?utm_medium=mapframe&utm_source=maps"
+        style="color:#eee;font-size:12px;position:absolute;top:14px;">Технопарк в Казани</a><a
+        href="https://yandex.ru/maps/43/kazan/category/business_incubator_/82858001211/?utm_medium=mapframe&utm_source=maps"
+        style="color:#eee;font-size:12px;position:absolute;top:28px;">Бизнес-инкубатор в Казани</a>
+    <iframe src="https://yandex.ru/map-widget/v1/?indoorLevel=1&ll=49.128127%2C55.779474&mode=poi&poi%5Bpoint%5D=49.127671%2C55.779446&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D209623831137&z=16.75"
+            width="560" height="400" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
 </div>
 <%@include file="/WEB-INF/view/parts/_footer.jsp" %>

@@ -27,4 +27,8 @@ public class StaffService {
                 .salary(employee.salary())
                 .build());
     }
+
+    public boolean deleteEmployeeById(long employeeId) {
+        return staffDao.deleteById(employeeId);
+    }
 }
