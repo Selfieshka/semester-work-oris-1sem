@@ -23,6 +23,10 @@ public class SignUpOwnerValidator implements Validator<SignUpOwnerDto> {
         if (signUpOwnerDto.password().isEmpty()) {
             validationResult.add(new Error("invalid.password", "Поле \"Пароль\" не может быть пустым"));
         }
+        if (signUpOwnerDto.password().length() >= 5) {
+            System.out.println(signUpOwnerDto.password());
+            validationResult.add(new Error("invalid.passwordLength", "Поле \"Пароль\" не может короче 5 символов"));
+        }
         return validationResult;
     }
 }

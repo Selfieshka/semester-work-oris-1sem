@@ -25,7 +25,7 @@
             <input name="email" type="email" autocomplete="off" placeholder="Введите email"/>
         </div>
         <div class="input-box">
-            <input name="password" type="password" autocomplete="off" placeholder="Придумайте пароль" required/>
+            <input name="password" type="password" autocomplete="off" minlength="5" placeholder="Придумайте пароль" required/>
         </div>
         <button type="submit" class="btn">Зарегистрироваться</button>
         <div class="register-link">
