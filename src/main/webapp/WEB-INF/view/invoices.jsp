@@ -6,12 +6,43 @@
 <head>
     <title>Накладные</title>
     <link rel="stylesheet" href="<c:url value="/style/invoices.css"/>">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script defer src="<c:url value="/js/invoices.js"/>"></script>
 </head>
 
 <%@include file="/WEB-INF/view/parts/_sidebar.jsp" %>
+<header class="header">
+    <h1>Накладные</h1>
+</header>
+<%@include file="/WEB-INF/view/parts/_errors.jsp" %>
 
-<button id="openModal">Создать накладную</button>
+<div id="invoiceModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2>Информация о накладной</h2>
+        <div id="invoiceDetails"></div>
+    </div>
+</div>
+
+<div class="invoice-container">
+    <button id="openModal" class="add-btn">Создать накладную</button>
+    <div class="invoice-header">
+        <span>Номер накладной</span>
+        <span>Дата</span>
+        <span>Удалить</span>
+    </div>
+    <c:forEach items="${requestScope.get('invoices')}" var="invoice">
+        <div class="invoice-row" onclick="showInvoiceInfo(${invoice.invoiceId()}, '${invoice.number()}', '${invoice.date()}', '${invoice.sum()}', '${invoice.count()}', '${invoice.countTov()}')">
+            <div class="invoice-info">
+                <span><c:out value="${invoice.number()}"/></span>
+                <span><c:out value="${invoice.date()}"/></span>
+            </div>
+            <span class="delete-btn"
+                  onclick="deleteInvoice(${invoice.invoiceId()}, this.closest('.invoice-row'))">&times;</span>
+        </div>
+    </c:forEach>
+</div>
+
 
 <div id="myModal" class="modal-container">
     <div class="modal-content">
@@ -34,22 +65,10 @@
             <input type="text" id="quantity" name="quantity" required/>
             <label for="costPerUnit">Название колонки стоимости товара за единицу</label>
             <input type="text" id="costPerUnit" name="costPerUnit" required/>
-            <button type="submit">Send the file</button>
+            <button type="submit">Отправить</button>
         </form>
     </div>
 </div>
-<tr>
-    <th>Номер накладной</th>
-    <th>Дата</th>
-</tr>
-<div class="invoice-container">
-    <h1>Накладные</h1>
-    <c:forEach items="${requestScope.get('invoices')}" var="invoice">
-        <div class="invoice-row">
-            <h3><c:out value="${invoice.number()}"/></h3>
-            <p><c:out value="${invoice.date()}"/></p>
-        </div>
-    </c:forEach>
-</div>
+
 
 <%@include file="/WEB-INF/view/parts/_footer.jsp" %>

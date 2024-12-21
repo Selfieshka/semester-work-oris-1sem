@@ -26,7 +26,7 @@ public class CreateEmployeeValidator implements Validator<EmployeeDto> {
             validationResult.add(new Error("invalid.category", "Поле \"Должность\" не может быть пустым"));
         }
         if (employeeDto.effectiveDate().isAfter(LocalDate.now())) {
-            validationResult.add(new Error("invalid.category", "Поле \"Имя\" не может быть пустым"));
+            validationResult.add(new Error("invalid.category", "Поле \"Дата\" не может быть позже чем сейчас"));
         }
         return validationResult;
     }

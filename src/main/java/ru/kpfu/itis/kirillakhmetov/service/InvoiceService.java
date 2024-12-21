@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @RequiredArgsConstructor
 public class InvoiceService {
@@ -44,10 +45,18 @@ public class InvoiceService {
         for (Invoice invoice : invoices) {
             invoiceDtos.add(new InvoiceDto(
                     invoice.getOwner_id(),
+                    invoice.getId(),
                     invoice.getNumber(),
-                    invoice.getDate()
+                    invoice.getDate(),
+                    (double) (100000 + (int) (Math.random() * (400000 - 100000))),
+                    (int) (1 + (Math.random() * (20 - 1))),
+                    (int) (20 + (Math.random() * (200 - 20)))
             ));
         }
         return invoiceDtos;
+    }
+
+    public void deleteInvoiceById(long invoiceId) {
+        invoiceDao.deleteById(invoiceId);
     }
 }

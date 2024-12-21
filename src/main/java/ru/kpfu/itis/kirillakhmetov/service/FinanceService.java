@@ -79,10 +79,10 @@ public class FinanceService {
                 dates.add(finance.getDate().format(FORMATTER));
                 amounts.add(String.valueOf(finance.getAmount()));
             }
-            forecastDate = LocalDate.parse(dates.getLast(), FORMATTER).format(FORMATTER);
+            forecastDate = LocalDate.parse(dates.getLast(), FORMATTER).plusMonths(1).format(FORMATTER);
             dates.add(forecastDate);
         }
-        String forecastValue = String.valueOf(calculateAverageDifference(amounts));
+        String forecastValue = String.valueOf(Math.round(calculateAverageDifference(amounts) / 100) * 100);
         return JsonConverter.convertToJson(new ProfitDto(dates, amounts, forecastDate, forecastValue));
     }
 

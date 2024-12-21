@@ -45,9 +45,10 @@ public class InvoicesServlet extends HttpServlet {
         if (invoiceService.checkExtension(invoice)) {
             invoiceService.saveInvoiceInfo(new InvoiceDto(
                     (Long) req.getSession().getAttribute("id"),
+                    null,
                     req.getParameter("number"),
-                    LocalDate.parse(req.getParameter("date"))
-            ), invoice, headerNames);
+                    LocalDate.parse(req.getParameter("date")),
+                    null, null, null), invoice, headerNames);
             resp.sendRedirect(getServletContext().getContextPath() + "/invoices");
         } else {
             throw new RuntimeException("Неподдерживаемый тип файла");

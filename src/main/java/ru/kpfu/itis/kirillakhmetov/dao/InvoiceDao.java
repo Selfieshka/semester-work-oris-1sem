@@ -29,6 +29,11 @@ public class InvoiceDao extends BaseDao<Invoice> {
             SELECT * FROM invoice
             WHERE owner_id = ?
             """;
+    //language=sql
+    private static final String SQL_DELETE_INVOICE_BY_ID = """
+            DELETE FROM invoice
+            WHERE invoice_id = ?
+            """;
 
 
     public InvoiceDao() {
@@ -79,6 +84,17 @@ public class InvoiceDao extends BaseDao<Invoice> {
                 invoices.add(mapper.mapRow(resultSet));
             }
             return invoices;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        try (Connection connection = ConnectionProvider.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SQL_DELETE_INVOICE_BY_ID)) {
+            statement.setLong(1, id);
+            return statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
