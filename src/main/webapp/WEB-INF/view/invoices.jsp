@@ -65,7 +65,7 @@
             <input type="text" id="quantity" name="quantity" required/>
             <label for="costPerUnit">Название колонки стоимости товара за единицу</label>
             <input type="text" id="costPerUnit" name="costPerUnit" required/>
-            <button type="submit">Send the file</button>
+            <button type="submit">Отправить</button>
         </form>
     </div>
 </div>

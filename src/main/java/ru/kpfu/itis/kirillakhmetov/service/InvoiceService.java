@@ -48,9 +48,9 @@ public class InvoiceService {
                     invoice.getId(),
                     invoice.getNumber(),
                     invoice.getDate(),
-                    182450D,
-                    9,
-                    68
+                    (double) (100000 + (int) (Math.random() * (400000 - 100000))),
+                    (int) (1 + (Math.random() * (20 - 1))),
+                    (int) (20 + (Math.random() * (200 - 20)))
             ));
         }
         return invoiceDtos;
